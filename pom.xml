@@ -1,44 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>library</artifactId>
-	<packaging>jar</packaging>
-	<parent>
-		<groupId>nl.loxia.engineering-beheersing-regressietest</groupId>
-		<artifactId>aggregator</artifactId>
-		<version>4.15.0</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+  <groupId>library</groupId>
+  <artifactId>library</artifactId>
+  <version>0.0.1.0</version>
+  <packaging>jar</packaging>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.miglayout/miglayout -->
-		<dependency>
-			<groupId>com.miglayout</groupId>
-			<artifactId>miglayout</artifactId>
-			<version>3.7.4</version>
-		</dependency>
-				<!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx</artifactId>
-            <version>11</version>
-            <type>pom</type>
-        </dependency>
-            <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-graphics </artifactId>
-        <version>11</version>
-        <classifier>win</classifier>
+  <name>library</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+
+
+  <dependencies>
+    <!--
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
     </dependency>
-           <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
-       <dependency>
-           <groupId>org.openjfx</groupId>
-           <artifactId>javafx-controls</artifactId>
-           <version>11.0.2</version>
-       </dependency>
+	-->
+	<dependency>
+	<groupId>org.json</groupId>
+	  <artifactId>json</artifactId>
+	  <version>20230227</version>
+	</dependency>
+	<dependency>
+      <groupId>io.jenetics</groupId>
+      <artifactId>jpx</artifactId>
+      <version>1.5.2</version>
+    </dependency>	<dependency>
+      <groupId>fr.dudie</groupId>
+      <artifactId>nominatim-api</artifactId>
+      <version>3.4</version>
+    </dependency>
+	<dependency>
+	  <groupId>com.miglayout</groupId>
+	  <artifactId>miglayout</artifactId>
+	  <version>3.7.4</version>
+	</dependency>	
+ 
 	</dependencies>
 
 	<build>
@@ -70,6 +77,4 @@
 			</plugin>	
 		</plugins>
 	</build>
-	<version>1.0.0</version>
-	<groupId>ebh.rttools</groupId>
 </project>
