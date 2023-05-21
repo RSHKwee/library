@@ -59,6 +59,18 @@ public class TxtBestand {
     }
   }
 
+  public static void DumpXmlBestand(String a_OutputFile, ArrayList<String> a_Regels) {
+    try {
+      OutputTxt logbestand = new OutputTxt(a_OutputFile);
+      logbestand.SetComment("<!-- ", " -->");
+      logbestand.SetFooter(a_OutputFile);
+      logbestand.Schrijf(a_Regels);
+      logbestand.Close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
   public static void LeegBestand(String a_OutputFile) {
     ArrayList<String> v_Regels = new ArrayList<String>();
     v_Regels.add("# Leeg");
