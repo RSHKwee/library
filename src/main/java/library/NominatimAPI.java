@@ -23,6 +23,9 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Java library for reverse geocoding using Nominatim
  * 
@@ -31,6 +34,7 @@ import javax.net.ssl.HttpsURLConnection;
  *
  */
 public class NominatimAPI {
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private final String NominatimInstance = "https://nominatim.openstreetmap.org";
 
   /**
@@ -93,6 +97,7 @@ public class NominatimAPI {
     try {
       result = new Address(getJSON(urlString), zoomLevel);
     } catch (IOException e) {
+      LOGGER.log(Level.WARNING, "Can't connect to server.");
       System.err.println("Can't connect to server.");
       e.printStackTrace();
     }
@@ -112,6 +117,7 @@ public class NominatimAPI {
       result.append(text);
 
     in.close();
+    LOGGER.log(Level.INFO, result.toString());
     return result.toString();
   }
 }
