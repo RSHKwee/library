@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 import java.io.*;
 import java.util.logging.Level;

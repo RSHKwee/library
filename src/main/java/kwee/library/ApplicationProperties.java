@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 import java.io.IOException;
 import java.util.Properties;

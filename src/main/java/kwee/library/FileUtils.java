@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 import java.io.*;
 
@@ -154,7 +154,7 @@ public class FileUtils {
 
   /**
    * Returns filename without extension.
-   *  
+   * 
    * @param file String representation of file
    * @return filename without extension.
    */

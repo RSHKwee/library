@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 /**
  * (C) Copyright 2018 Daniel Braun (http://www.daniel-braun.com/).

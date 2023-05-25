@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -70,7 +70,7 @@ public class TxtBestand {
       e.printStackTrace();
     }
   }
-  
+
   public static void LeegBestand(String a_OutputFile) {
     ArrayList<String> v_Regels = new ArrayList<String>();
     v_Regels.add("# Leeg");

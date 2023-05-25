@@ -1,4 +1,4 @@
-package library;
+package kwee.library;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class OutputTxt {
   }
 
   public void SetFooter(String a_Footer) {
-	m_Footer = m_commentStart + a_Footer + m_commentEnd;
+    m_Footer = m_commentStart + a_Footer + m_commentEnd;
   }
 
   public void SetComment(String a_Comment) {
@@ -41,12 +41,12 @@ public class OutputTxt {
   }
 
   public void SetComment(String a_CommentStart, String a_CommentEnd) {
-	m_commentStart = a_CommentStart;
-	m_commentEnd = a_CommentEnd;
+    m_commentStart = a_CommentStart;
+    m_commentEnd = a_CommentEnd;
   }
 
   public void SetHeader(String a_Header) {
-	m_Header = m_commentStart + a_Header + m_commentEnd;
+    m_Header = m_commentStart + a_Header + m_commentEnd;
   }
 
   public void Close() throws IOException {
