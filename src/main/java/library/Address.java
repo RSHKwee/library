@@ -26,7 +26,8 @@ public class Address {
     try {
       JSONObject jObject = new JSONObject(json);
       System.out.println(json);
-      LOGGER.log(Level.INFO, json);
+      LOGGER.log(Level.INFO, "json:'" + json + "'");
+      LOGGER.log(Level.INFO, "lod:" + lod);
       if (jObject.has("error")) {
         LOGGER.log(Level.INFO, jObject.get("error").toString());
         System.err.println(jObject.get("error"));
