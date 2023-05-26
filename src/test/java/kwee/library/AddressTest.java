@@ -23,64 +23,64 @@ public class AddressTest extends TestCase {
   }
 
   public void testAddress() {
-
+    // assert
     // fail("Not yet implemented");
   }
 
   public void testGetOsmId() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getOsmId(), 151930472);
   }
 
   public void testGetOsmType() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getOsmType(), "way");
   }
 
   public void testGetLod() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getLod(), 18);
   }
 
   public void testGetCountryCode() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getCountryCode(), "nl");
   }
 
   public void testGetCountry() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getCountry(), "Nederland");
   }
 
   public void testGetPostcode() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getPostcode(), "3818 MZ");
   }
 
   public void testGetState() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getState(), "Utrecht");
   }
 
   public void testGetCounty() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getCounty(), "");
   }
 
   public void testGetCity() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getCity(), "");
   }
 
   public void testGetSuburb() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getSuburb(), "");
   }
 
   public void testGetRoad() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getRoad(), "A28");
   }
 
   public void testGetDisplayName() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.getDisplayName(), "A28, Leusden, Utrecht, Nederland, 3818 MZ, Nederland");
   }
 
   public void testToString() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.toString(), "A28, Leusden, Utrecht, Nederland, 3818 MZ, Nederland");
   }
 
   public void testReplSemiColon() {
-    // fail("Not yet implemented");
+    assertEquals(m_address.ReplSemiColon("A28, Leusden; Utrecht; Nederland, 3818 MZ, Nederland"),
+        "A28, Leusden, Utrecht, Nederland, 3818 MZ, Nederland");
   }
-
 }

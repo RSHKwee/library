@@ -161,10 +161,8 @@ public class Summary {
       });
     } catch (IOException e) {
       LOGGER.log(Level.INFO, e.getMessage());
-      e.printStackTrace();
     } catch (java.lang.Exception e) {
       LOGGER.log(Level.INFO, e.getMessage());
-      e.printStackTrace();
     }
 
     // Reset propgress bars

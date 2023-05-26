@@ -20,7 +20,7 @@ public class TxtBestand {
       logbestand.Schrijf(a_Regels);
       logbestand.Close();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
   }
 
@@ -31,7 +31,7 @@ public class TxtBestand {
       logbestand.Schrijf(a_Regels);
       logbestand.Close();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
   }
 
@@ -43,7 +43,7 @@ public class TxtBestand {
       logbestand.Schrijf(m_Regels);
       logbestand.Close();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
   }
 
@@ -55,7 +55,7 @@ public class TxtBestand {
       logbestand.Schrijf(m_Regels);
       logbestand.Close();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
   }
 
@@ -67,7 +67,7 @@ public class TxtBestand {
       logbestand.Schrijf(a_Regels);
       logbestand.Close();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
   }
 

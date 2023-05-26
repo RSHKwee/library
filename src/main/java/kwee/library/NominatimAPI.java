@@ -97,9 +97,7 @@ public class NominatimAPI {
     try {
       result = new Address(getJSON(urlString), zoomLevel);
     } catch (IOException e) {
-      LOGGER.log(Level.WARNING, "Can't connect to server.");
-      System.err.println("Can't connect to server.");
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Can't connect to server." + e.getMessage());
     }
     return result;
   }

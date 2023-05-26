@@ -25,12 +25,11 @@ public class Address {
   public Address(String json, int lod) {
     try {
       JSONObject jObject = new JSONObject(json);
-      System.out.println(json);
-      LOGGER.log(Level.INFO, "json:'" + json + "'");
-      LOGGER.log(Level.INFO, "lod:" + lod);
+
+      LOGGER.log(Level.FINEST, "json:'" + json + "'");
+      LOGGER.log(Level.FINEST, "lod:" + lod);
       if (jObject.has("error")) {
         LOGGER.log(Level.INFO, jObject.get("error").toString());
-        System.err.println(jObject.get("error"));
         return;
       }
 
@@ -66,8 +65,7 @@ public class Address {
 
       this.lod = lod;
     } catch (JSONException e) {
-      System.err.println("Can't parse JSON string");
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Can't parse JSON string: " + e.getMessage());
     }
   }
 

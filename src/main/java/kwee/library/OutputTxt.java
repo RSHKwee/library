@@ -1,5 +1,8 @@
 package kwee.library;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
  *
  */
 public class OutputTxt {
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
   private String m_Header = "";
   private String m_Footer = "";
   private BufferedWriter m_writer;
@@ -63,14 +68,14 @@ public class OutputTxt {
       try {
         m_writer.write(m_Header + "\r\n");
       } catch (IOException e) {
-        e.printStackTrace();
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
     }
     a_Regels.forEach(v_Regel -> {
       try {
         m_writer.write(v_Regel + "\r\n");
       } catch (IOException e) {
-        e.printStackTrace();
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
     });
   }
