@@ -6,24 +6,16 @@ import java.util.logging.LogRecord;
 
 import junit.framework.TestCase;
 import kwee.logger.ByteArrayHandler;
-import kwee.logger.MyLogger;
 
 public class NominatimAPITest extends TestCase {
   private static final Logger logger = Logger.getLogger(Class.class.getName());
   private NominatimAPI m_Api;
   private ByteArrayHandler handler;
 
-  // Variables
-  private String m_LogDir = "c:\\";
-  private boolean m_toDisk = false;
-  private Level m_Level = Level.INFO;
-
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     m_Api = new NominatimAPI();
-
-    MyLogger.setup(m_Level, m_LogDir, m_toDisk);
 
     // Create a custom handler to capture log messages
     handler = new ByteArrayHandler() {
@@ -51,16 +43,17 @@ public class NominatimAPITest extends TestCase {
   }
 
   public void testNominatimAPIInt() {
-    assertNotNull(new NominatimAPI(10));
+    NominatimAPI l_api = new NominatimAPI(10);
+    assertNotNull(l_api);
 
-    @SuppressWarnings("unused")
-    NominatimAPI l_api = new NominatimAPI(20);
+    l_api = new NominatimAPI(20);
     String logOutput = new String(handler.toByteArray()).trim();
-    boolean bstat = logOutput.contains("WARNING invalid zoom level, using default value, set to 18");
+    boolean bstat = logOutput.contains("WARNING invalid zoom level (20), using default value, set to 18");
     assertTrue(bstat);
 
     l_api = new NominatimAPI(-1);
-    bstat = logOutput.contains("WARNING invalid zoom level, using default value, set to 18");
+    logOutput = new String(handler.toByteArray()).trim();
+    bstat = logOutput.contains("WARNING invalid zoom level (-1), using default value, set to 18");
     assertTrue(bstat);
   }
 

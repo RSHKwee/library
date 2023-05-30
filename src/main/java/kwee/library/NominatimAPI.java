@@ -83,7 +83,7 @@ public class NominatimAPI {
 
   public NominatimAPI(int zoomLevel) {
     if (zoomLevel < 0 || zoomLevel > 18) {
-      LOGGER.log(Level.WARNING, "invalid zoom level, using default value, set to 18");
+      LOGGER.log(Level.WARNING, "invalid zoom level (" + zoomLevel + "), using default value, set to 18");
       zoomLevel = 18;
     }
     this.zoomLevel = zoomLevel;
