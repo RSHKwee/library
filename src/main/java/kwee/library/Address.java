@@ -22,6 +22,9 @@ public class Address {
   private String road = "";
   private String display_name = "";
 
+  Address() {
+  }
+
   public Address(String json, int lod) {
     try {
       JSONObject jObject = new JSONObject(json);
@@ -120,6 +123,36 @@ public class Address {
   @Override
   public String toString() {
     return ReplSemiColon(display_name);
+  }
+
+  public boolean equals(Address a_adress) {
+    boolean bstat = true;
+    if (a_adress.getLod() != lod) {
+      bstat = false;
+    } else if (a_adress.getOsmId() != osm_id) {
+      bstat = false;
+    } else if (!osm_type.equalsIgnoreCase(a_adress.getOsmType())) {
+      bstat = false;
+    } else if (!country_code.equalsIgnoreCase(a_adress.getCountryCode())) {
+      bstat = false;
+    } else if (!country.equalsIgnoreCase(a_adress.getCountry())) {
+      bstat = false;
+    } else if (!postcode.equalsIgnoreCase(a_adress.getPostcode())) {
+      bstat = false;
+    } else if (!state.equalsIgnoreCase(a_adress.getState())) {
+      bstat = false;
+    } else if (!county.equalsIgnoreCase(a_adress.getCounty())) {
+      bstat = false;
+    } else if (!city.equalsIgnoreCase(a_adress.getCity())) {
+      bstat = false;
+    } else if (!suburb.equalsIgnoreCase(a_adress.getSuburb())) {
+      bstat = false;
+    } else if (!road.equalsIgnoreCase(a_adress.getRoad())) {
+      bstat = false;
+    } else if (!display_name.equalsIgnoreCase(a_adress.getDisplayName())) {
+      bstat = false;
+    }
+    return bstat;
   }
 
   String ReplSemiColon(String a_Str) {

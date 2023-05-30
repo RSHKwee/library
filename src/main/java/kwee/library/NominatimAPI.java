@@ -83,10 +83,9 @@ public class NominatimAPI {
 
   public NominatimAPI(int zoomLevel) {
     if (zoomLevel < 0 || zoomLevel > 18) {
-      System.err.println("invalid zoom level, using default value");
+      LOGGER.log(Level.WARNING, "invalid zoom level, using default value, set to 18");
       zoomLevel = 18;
     }
-
     this.zoomLevel = zoomLevel;
   }
 
@@ -111,11 +110,12 @@ public class NominatimAPI {
     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     String text;
     StringBuilder result = new StringBuilder();
-    while ((text = in.readLine()) != null)
+    while ((text = in.readLine()) != null) {
       result.append(text);
+    }
 
     in.close();
-    LOGGER.log(Level.INFO, result.toString());
+    LOGGER.log(Level.FINEST, result.toString());
     return result.toString();
   }
 }
