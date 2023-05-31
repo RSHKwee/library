@@ -1,41 +1,23 @@
 package kwee.library;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.LogRecord;
-
 import junit.framework.TestCase;
-import kwee.logger.ByteArrayHandler;
+import kwee.logger.TestLogger;
 
 public class NominatimAPITest extends TestCase {
-  private static final Logger logger = Logger.getLogger(Class.class.getName());
+//  private static final Logger logger = Logger.getLogger(Class.class.getName());
   private NominatimAPI m_Api;
-  private ByteArrayHandler handler;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     m_Api = new NominatimAPI();
-
-    // Create a custom handler to capture log messages
-    handler = new ByteArrayHandler() {
-      @Override
-      public void publish(LogRecord record) {
-        super.publish(record);
-        flush();
-      }
-    };
-
-    logger.addHandler(handler);
-    logger.setLevel(Level.ALL);
+    TestLogger.setup();
   }
 
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();
-
-    logger.removeHandler(handler);
-    handler.close();
+    TestLogger.close();
   }
 
   public void testNominatimAPI() {
@@ -47,12 +29,12 @@ public class NominatimAPITest extends TestCase {
     assertNotNull(l_api);
 
     l_api = new NominatimAPI(20);
-    String logOutput = new String(handler.toByteArray()).trim();
+    String logOutput = TestLogger.getOutput();
     boolean bstat = logOutput.contains("WARNING invalid zoom level (20), using default value, set to 18");
     assertTrue(bstat);
 
     l_api = new NominatimAPI(-1);
-    logOutput = new String(handler.toByteArray()).trim();
+    logOutput = TestLogger.getOutput();
     bstat = logOutput.contains("WARNING invalid zoom level (-1), using default value, set to 18");
     assertTrue(bstat);
   }
