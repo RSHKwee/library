@@ -209,4 +209,44 @@ public class FileUtils {
     }
   }
 
+  /**
+   * Compare file contents.
+   * 
+   * @param a_file1 Filename file 1
+   * @param a_file2 Filename file 2
+   * @return true if content equals otherwise false.
+   */
+  static public boolean FileContentsEquals(String a_file1, String a_file2) {
+    boolean bstat = false;
+    try {
+      String l_content_1 = readFile(a_file1);
+      String l_content_2 = readFile(a_file2);
+
+      bstat = l_content_1.contentEquals(l_content_2);
+    } catch (IOException e) {
+      LOGGER.info(e.getMessage());
+      ;
+    }
+    return bstat;
+  }
+
+  /**
+   * Read file and ignore comments.
+   * 
+   * @param fileName Filename inc. directory
+   * @return Filecontents without comments (line starts with #)
+   * @throws IOException
+   */
+  static private String readFile(String fileName) throws IOException {
+    StringBuilder content = new StringBuilder();
+    try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if (!line.startsWith("#")) {
+          content.append(line);
+        }
+      }
+    }
+    return content.toString();
+  }
 }
