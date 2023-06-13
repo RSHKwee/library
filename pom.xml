@@ -26,7 +26,8 @@
       <groupId>io.jenetics</groupId>
       <artifactId>jpx</artifactId>
       <version>1.5.2</version>
-    </dependency>  <dependency>
+    </dependency>  
+	<dependency>
       <groupId>fr.dudie</groupId>
       <artifactId>nominatim-api</artifactId>
       <version>3.4</version>
