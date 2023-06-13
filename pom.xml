@@ -7,8 +7,14 @@
   <version>0.0.2.0</version>
   <packaging>jar</packaging>
 
+  <parent>
+	<groupId>kwee</groupId>
+	<artifactId>aggregator</artifactId>
+	<version>0.0.1.0</version>
+	<relativePath>../pom.xml</relativePath>
+  </parent>
+  
   <name>library</name>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
