@@ -58,7 +58,8 @@ public class OutputTxt {
     LocalDate today = LocalDate.now();
     LocalTime time = LocalTime.now();
     m_writer.write(m_Footer + "\r\n");
-    m_writer.write(m_commentStart + " Gegenereerd op " + today.toString() + " " + time.toString() + "\r\n");
+    m_writer
+        .write(m_commentStart + " Gegenereerd op " + today.toString() + " " + time.toString() + m_commentEnd + "\r\n");
 
     m_writer.close();
   }
