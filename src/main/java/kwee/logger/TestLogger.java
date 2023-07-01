@@ -8,7 +8,7 @@ public class TestLogger {
   private static final Logger logger = Logger.getLogger(Class.class.getName());
   private static ByteArrayHandler handler;
 
-  static public void setup() {
+  static public void setup(Level a_Level) {
     // Create a custom handler to capture log messages
     handler = new ByteArrayHandler() {
       @Override
@@ -18,7 +18,11 @@ public class TestLogger {
       }
     };
     logger.addHandler(handler);
-    logger.setLevel(Level.ALL);
+    logger.setLevel(a_Level);
+  }
+
+  static public void setup() {
+    setup(Level.ALL);
   }
 
   static public void close() {
