@@ -1,5 +1,7 @@
 package kwee.library;
 
+import java.util.logging.Level;
+
 import junit.framework.TestCase;
 import kwee.logger.TestLogger;
 
@@ -11,7 +13,7 @@ public class NominatimAPITest extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
     m_Api = new NominatimAPI();
-    TestLogger.setup();
+    TestLogger.setup(Level.INFO);
   }
 
   @Override
