@@ -55,4 +55,13 @@
       </plugin>  
     </plugins>
   </build>
+  <distributionManagement>
+    <!-- Upload to Github v-->
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/RSHKwee/library</url>
+    </repository>
+    <!-- Upload to Github ^-->
+  </distributionManagement>
 </project>
