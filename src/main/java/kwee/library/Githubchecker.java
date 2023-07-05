@@ -6,9 +6,12 @@ import java.io.InputStreamReader;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Githubchecker {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
@@ -56,9 +59,52 @@ public class Githubchecker {
     return latestTag;
   }
 
+  /**
+   * 
+   * @param currentVersion Application version
+   * @param latestTag      On GitHub
+   * @return
+   */
   public static boolean isUpdateAvailable(String currentVersion, String latestTag) {
+    boolean bstat = false;
     // Implement your logic to compare versions here
     // For example, you can use semantic versioning comparison logic
-    return currentVersion.compareToIgnoreCase(latestTag) < 0;
+    String[] verselems = currentVersion.split(" ");
+    if (verselems.length > 1) {
+      bstat = true;
+    } else {
+      List<Integer> currentInts = extractNumbers(currentVersion);
+      List<Integer> latestInts = extractNumbers(latestTag);
+      if ((currentInts.size() > 0) && latestInts.size() > 0) {
+        int len = currentInts.size();
+        if (latestInts.size() < len) {
+          len = latestInts.size();
+        }
+        int i = 0;
+        while ((i < len) && (bstat == false)) {
+          if (currentInts.get(i) < latestInts.get(i)) {
+            bstat = true;
+          }
+          i++;
+        }
+      } else {
+        bstat = true;
+      }
+    }
+    return bstat;
   }
+
+  public static List<Integer> extractNumbers(String text) {
+    List<Integer> numbersList = new ArrayList<>();
+    Pattern pattern = Pattern.compile("\\d+"); // Matches one or more digits
+
+    Matcher matcher = pattern.matcher(text);
+    while (matcher.find()) {
+      int number = Integer.parseInt(matcher.group());
+      numbersList.add(number);
+    }
+
+    return numbersList;
+  }
+
 }
