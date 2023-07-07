@@ -224,9 +224,13 @@ public class FileUtils {
       String l_content_2 = readFile(a_file2, a_comment);
 
       bstat = l_content_1.contentEquals(l_content_2);
+      if (!bstat) {
+        LOGGER.info("Line1 not equal: " + l_content_1);
+        LOGGER.info("Line2 not equal: " + l_content_2);
+      }
     } catch (IOException e) {
+      LOGGER.info("FileContentsEquals: File 1: " + a_file1 + " File 2:" + a_file2);
       LOGGER.info(e.getMessage());
-      ;
     }
     return bstat;
   }
