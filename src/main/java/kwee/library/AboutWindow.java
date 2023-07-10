@@ -55,7 +55,7 @@ public class AboutWindow extends Frame {
     if (Githubchecker.isUpdateAvailable(creationtime, latest)) {
       downloadButton.setEnabled(true);
       downloadButton.setVisible(true);
-      l_message = l_message + "\n\n" + "\t New version available: " + latest;
+      l_message = l_message + "\n\n" + "\t Version available: " + latest;
     } else if (latest.isEmpty()) {
       downloadButton.setEnabled(true);
       downloadButton.setVisible(true);

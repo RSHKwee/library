@@ -67,28 +67,29 @@ public class Githubchecker {
    */
   public static boolean isUpdateAvailable(String currentVersion, String latestTag) {
     boolean bstat = false;
-    // Implement your logic to compare versions here
-    // For example, you can use semantic versioning comparison logic
     String[] verselems = currentVersion.split(" ");
-    if (verselems.length > 1) {
-      bstat = true;
-    } else {
-      List<Integer> currentInts = extractNumbers(currentVersion);
-      List<Integer> latestInts = extractNumbers(latestTag);
-      if ((currentInts.size() > 0) && latestInts.size() > 0) {
-        int len = currentInts.size();
-        if (latestInts.size() < len) {
-          len = latestInts.size();
-        }
-        int i = 0;
-        while ((i < len) && (bstat == false)) {
-          if (currentInts.get(i) < latestInts.get(i)) {
-            bstat = true;
-          }
-          i++;
-        }
-      } else {
+    if (verselems.length > 0) {
+      if (currentVersion.toUpperCase().contains("IDE")) {
         bstat = true;
+      } else {
+        currentVersion = verselems[0];
+        List<Integer> currentInts = extractNumbers(currentVersion);
+        List<Integer> latestInts = extractNumbers(latestTag);
+        if ((currentInts.size() > 0) && latestInts.size() > 0) {
+          int len = currentInts.size();
+          if (latestInts.size() < len) {
+            len = latestInts.size();
+          }
+          int i = 0;
+          while ((i < len) && (bstat == false)) {
+            if (currentInts.get(i) < latestInts.get(i)) {
+              bstat = true;
+            }
+            i++;
+          }
+        } else {
+          bstat = true;
+        }
       }
     }
     return bstat;
