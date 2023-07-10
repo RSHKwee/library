@@ -1,7 +1,8 @@
 package kwee.library;
 
 import java.io.*;
-
+import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -173,8 +174,25 @@ public class FileUtils {
     ClassLoader loader = Thread.currentThread().getContextClassLoader();
     File file = new File(loader.getResource(a_resourceName).getFile());
     l_filename = file.getPath();
-
     return l_filename;
+  }
+
+  public static File GetResourceFile(String a_file) {
+    File l_File = null;
+    URL resourceUrl;
+    try {
+      resourceUrl = Thread.currentThread().getContextClassLoader().getResource(a_file);
+      if (resourceUrl != null) {
+        // Get the resource directory path
+        String resourceDirectory = resourceUrl.getPath();
+        l_File = new File(resourceDirectory);
+      } else {
+        LOGGER.log(Level.INFO, "File not found: " + a_file);
+      }
+    } catch (Exception e) {
+      LOGGER.log(Level.WARNING, e.getMessage());
+    }
+    return l_File;
   }
 
   /**
@@ -227,6 +245,8 @@ public class FileUtils {
       if (!bstat) {
         LOGGER.info("Line1 not equal: " + l_content_1);
         LOGGER.info("Line2 not equal: " + l_content_2);
+        String sdif = filterDifference(l_content_1, l_content_2);
+        LOGGER.info("Dif Line1 & 2: " + sdif);
       }
     } catch (IOException e) {
       LOGGER.info("FileContentsEquals: File 1: " + a_file1 + " File 2:" + a_file2);
@@ -264,5 +284,18 @@ public class FileUtils {
       }
     }
     return content.toString();
+  }
+
+  public static String filterDifference(String str1, String str2) {
+    int index = 0;
+    while (index < str1.length() && index < str2.length() && str1.charAt(index) == str2.charAt(index)) {
+      index++;
+    }
+
+    if (index == str1.length() || index == str2.length()) {
+      return ""; // Strings are identical, no difference found
+    }
+
+    return str1.substring(index) + str2.substring(index);
   }
 }
