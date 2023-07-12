@@ -14,11 +14,19 @@ public class ShowPreferences extends JFrame {
   private DefaultTableModel tableModel;
   private String m_clsname = "";
 
+  /**
+   * Constructor Select all stored Preferences
+   */
   public ShowPreferences() {
     // Initialize the preferences object
     preferences = Preferences.userRoot();
   }
 
+  /**
+   * Constructor Select stored Preferences for class with name "cls"
+   * 
+   * @param cls_name Class name
+   */
   public ShowPreferences(String cls_name) {
     // Initialize the preferences object
     Preferences userpreferences = Preferences.userRoot();
@@ -26,6 +34,9 @@ public class ShowPreferences extends JFrame {
     m_clsname = cls_name;
   }
 
+  /**
+   * Show all preferences in a separate Window
+   */
   public void showAllPreferences() {
     // Create a separate window to display all preferences in table form
     JFrame preferencesFrame = new JFrame("All Preferences");
@@ -95,6 +106,12 @@ public class ShowPreferences extends JFrame {
     }
   }
 
+  /**
+   * 
+   * @param prefs
+   * @param className
+   * @throws BackingStoreException
+   */
   private void collectPreferences(Preferences prefs, String className) throws BackingStoreException {
     String[] keys = prefs.keys();
     if (keys != null) {
@@ -113,6 +130,11 @@ public class ShowPreferences extends JFrame {
     }
   }
 
+  /**
+   * 
+   * @param x
+   * @param y
+   */
   private void showPopupMenu(int x, int y) {
     JPopupMenu popupMenu = new JPopupMenu();
     JMenuItem modifyItem = new JMenuItem("Modify");
@@ -138,6 +160,9 @@ public class ShowPreferences extends JFrame {
     popupMenu.show(preferencesTable, x, y);
   }
 
+  /**
+   * Modify selected rows
+   */
   private void modifySelectedRows() {
     int[] selectedRows = preferencesTable.getSelectedRows();
     for (int row : selectedRows) {
@@ -154,6 +179,9 @@ public class ShowPreferences extends JFrame {
     JOptionPane.showMessageDialog(this, "Selected rows modified!");
   }
 
+  /**
+   * Delete selected rows
+   */
   private void deleteSelectedRows() {
     int[] selectedRows = preferencesTable.getSelectedRows();
     for (int i = selectedRows.length - 1; i >= 0; i--) {
@@ -167,6 +195,41 @@ public class ShowPreferences extends JFrame {
       tableModel.removeRow(selectedRows[i]);
     }
     JOptionPane.showMessageDialog(this, "Selected rows deleted!");
+  }
+
+  public Preferences getPreferences() {
+    return preferences;
+  }
+
+  /**
+   * 
+   * @param nodeName
+   * @param prefs
+   * @return
+   * @throws BackingStoreException
+   */
+  public String dumpPreferences(String nodeName, Preferences prefs) throws BackingStoreException {
+    String lstr = "";
+    // Retrieve all preference keys
+    String[] keys = prefs.keys();
+
+    // Iterate through the keys and retrieve their values
+    for (String key : keys) {
+      String value = prefs.get(key, null);
+      lstr = lstr + nodeName + " | " + key + " = " + value + "\n ";
+      // System.out.println(nodeName + "/" + key + " = " + value);
+    }
+
+    // Retrieve all child nodes
+    String[] childNodes = prefs.childrenNames();
+
+    // Recursively dump the child nodes
+    for (String childNode : childNodes) {
+      Preferences childPrefs = prefs.node(childNode);
+      String childNodeName = nodeName.isEmpty() ? childNode : nodeName + " / " + childNode;
+      lstr = lstr + dumpPreferences(childNodeName, childPrefs) + "\n ";
+    }
+    return lstr;
   }
 
 }
