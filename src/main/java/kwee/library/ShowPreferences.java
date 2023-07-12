@@ -30,6 +30,7 @@ public class ShowPreferences extends JFrame {
     // Create a separate window to display all preferences in table form
     JFrame preferencesFrame = new JFrame("All Preferences");
     preferencesFrame.setLayout(new BorderLayout());
+    preferencesFrame.setLocation(75, 75);
 
     tableModel = new DefaultTableModel(new Object[] { "Class Name", "Key", "Value" }, 0);
     preferencesTable = new JTable(tableModel);
@@ -37,12 +38,13 @@ public class ShowPreferences extends JFrame {
     JScrollPane scrollPane = new JScrollPane(preferencesTable);
 
     preferencesFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-    preferencesFrame.setSize(500, 300);
+    preferencesFrame.setSize(600, 300);
     preferencesFrame.setVisible(true);
 
     // Set up cell editors for editing key and value
     preferencesTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(new JTextField()));
     preferencesTable.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JTextField()));
+    preferencesTable.setRowHeight(preferencesTable.getRowHeight() + 12);
 
     // Set up row selection listener
     ListSelectionModel selectionModel = preferencesTable.getSelectionModel();

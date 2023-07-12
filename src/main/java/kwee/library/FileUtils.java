@@ -243,13 +243,13 @@ public class FileUtils {
 
       bstat = l_content_1.contentEquals(l_content_2);
       if (!bstat) {
-        LOGGER.info("Line1 not equal: " + l_content_1);
-        LOGGER.info("Line2 not equal: " + l_content_2);
+        LOGGER.log(Level.FINE, "Line1 not equal: " + l_content_1);
+        LOGGER.log(Level.FINE, "Line2 not equal: " + l_content_2);
         String sdif = filterDifference(l_content_1, l_content_2);
-        LOGGER.info("Dif Line1 & 2: " + sdif);
+        LOGGER.log(Level.FINE, "Dif Line1 & 2: " + sdif);
       }
     } catch (IOException e) {
-      LOGGER.info("FileContentsEquals: File 1: " + a_file1 + " File 2:" + a_file2);
+      LOGGER.log(Level.FINE, "FileContentsEquals: File 1: " + a_file1 + " File 2:" + a_file2);
       LOGGER.info(e.getMessage());
     }
     return bstat;
@@ -291,11 +291,9 @@ public class FileUtils {
     while (index < str1.length() && index < str2.length() && str1.charAt(index) == str2.charAt(index)) {
       index++;
     }
-
     if (index == str1.length() || index == str2.length()) {
       return ""; // Strings are identical, no difference found
     }
-
     return str1.substring(index) + str2.substring(index);
   }
 }
