@@ -1,0 +1,12 @@
+#Header 1 2 3
+Aap
+Noot
+Mies
+Wim Zus Jet
+ggsd
+uiopoo
+45345346
+weerwe
+5345
+## F:\dev\Tools\library\target\test-classes\TxtBestand\test_out.txt
+# Generated on 2023-07-16 11:20:33.931696800

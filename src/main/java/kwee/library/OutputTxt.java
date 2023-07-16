@@ -54,12 +54,20 @@ public class OutputTxt {
     m_Header = m_commentStart + a_Header + m_commentEnd;
   }
 
+  public String getCommentEnd() {
+    return m_commentEnd;
+  }
+
+  public String getCommentStart() {
+    return m_commentStart;
+  }
+
   public void Close() throws IOException {
     LocalDate today = LocalDate.now();
     LocalTime time = LocalTime.now();
     m_writer.write(m_Footer + "\r\n");
     m_writer
-        .write(m_commentStart + " Gegenereerd op " + today.toString() + " " + time.toString() + m_commentEnd + "\r\n");
+        .write(m_commentStart + " Generated on " + today.toString() + " " + time.toString() + m_commentEnd + "\r\n");
 
     m_writer.close();
   }
