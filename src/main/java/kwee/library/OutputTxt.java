@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 public class OutputTxt {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private String m_charset = "ISO-8859-1";
 
   private String m_Header = "";
   private String m_Footer = "";
@@ -62,6 +63,10 @@ public class OutputTxt {
     return m_commentStart;
   }
 
+  public String getCharSet() {
+    return m_charset;
+  }
+
   public void Close() throws IOException {
     LocalDate today = LocalDate.now();
     LocalTime time = LocalTime.now();
@@ -91,7 +96,7 @@ public class OutputTxt {
 
   void OpenTxtFile(String a_OutputFile, boolean a_Append) throws IOException {
     Path outpath = Paths.get(a_OutputFile);
-    Charset charset = Charset.forName("ISO-8859-1");
+    Charset charset = Charset.forName(m_charset);
     if (a_Append) {
       OpenOption[] Options = { StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND };
       m_writer = Files.newBufferedWriter(outpath, charset, Options);

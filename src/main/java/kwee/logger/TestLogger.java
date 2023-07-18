@@ -26,8 +26,12 @@ public class TestLogger {
   }
 
   static public void close() {
-    logger.removeHandler(handler);
-    handler.close();
+    try {
+      logger.removeHandler(handler);
+      handler.close();
+    } catch (Exception e) {
+      // Do nothing.
+    }
   }
 
   static public String getOutput() {

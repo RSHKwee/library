@@ -1,6 +1,7 @@
 package kwee.library;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.stream.Stream;
 
 public class TxtBestand {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private String m_charset = "ISO-8859-1";
+
   private String m_Filenaam = "";
   private String m_Header = "";
   private ArrayList<String> m_Regels = new ArrayList<String>();
@@ -114,12 +117,13 @@ public class TxtBestand {
   private ArrayList<String> readTxtBestand(String a_path) {
     ArrayList<String> l_regels = new ArrayList<String>();
     // read file into stream, try-with-resources
-    try (Stream<String> stream = Files.lines(Paths.get(a_path))) {
+    Charset charset = Charset.forName(m_charset);
+    try (Stream<String> stream = Files.lines(Paths.get(a_path), charset)) {
       stream.forEach(l_line -> {
         l_regels.add(l_line);
       });
-    } catch (IOException e) {
-      LOGGER.log(Level.SEVERE, Class.class.getName() + ": " + e.getMessage());
+    } catch (Exception e) {
+      LOGGER.log(Level.FINE, Class.class.getName() + ": " + e.getMessage());
     }
     return l_regels;
   }
