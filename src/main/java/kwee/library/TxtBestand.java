@@ -14,36 +14,37 @@ public class TxtBestand {
   private String m_Header = "";
   private ArrayList<String> m_Regels = new ArrayList<String>();
 
+  // Constructors
   public TxtBestand() {
     m_Regels.clear();
   }
 
   public TxtBestand(String a_Filenaam) {
-    m_Regels.clear();
     m_Filenaam = a_Filenaam;
+    m_Regels = readTxtBestand(m_Filenaam);
   }
 
   public TxtBestand(String a_Filenaam, String a_Header) {
-    m_Regels.clear();
     m_Filenaam = a_Filenaam;
     m_Header = a_Header;
+    m_Regels = readTxtBestand(m_Filenaam);
   }
 
-  public static void DumpBestand(String a_OutputFile, ArrayList<String> a_Regels) {
-    try {
-      OutputTxt logbestand = new OutputTxt(a_OutputFile);
-      logbestand.SetFooter("# " + a_OutputFile);
-      logbestand.Schrijf(a_Regels);
-      logbestand.Close();
-    } catch (IOException e) {
-      LOGGER.log(Level.WARNING, e.getMessage());
-    }
+  // Getter
+  public ArrayList<String> getTxtContent() {
+    return m_Regels;
   }
 
+  /**
+   * Dump lines to file
+   * 
+   * @param a_Regels Lines
+   * @param a_Append Append or not to existing file
+   */
   public void DumpBestand(ArrayList<String> a_Regels, boolean a_Append) {
     ArrayList<String> l_Regels = new ArrayList<String>();
     if (a_Append) {
-      m_Regels = TxtBestand.readTxtBestand(m_Filenaam);
+      m_Regels = readTxtBestand(m_Filenaam);
       m_Regels.forEach(lRegel -> {
         if (!lRegel.startsWith("#")) {
           l_Regels.add(lRegel);
@@ -67,6 +68,30 @@ public class TxtBestand {
     }
   }
 
+  // Static functions
+  /**
+   * Dump lines to OutputFile
+   * 
+   * @param a_OutputFile Output file name
+   * @param a_Regels     Lines to dump
+   */
+  public static void DumpBestand(String a_OutputFile, ArrayList<String> a_Regels) {
+    try {
+      OutputTxt logbestand = new OutputTxt(a_OutputFile);
+      logbestand.SetFooter("# " + a_OutputFile);
+      logbestand.Schrijf(a_Regels);
+      logbestand.Close();
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, e.getMessage());
+    }
+  }
+
+  /**
+   * Dump lines to OutputFile in XML format
+   * 
+   * @param a_OutputFile Output file name
+   * @param a_Regels     XML Lines to dump
+   */
   public static void DumpXmlBestand(String a_OutputFile, ArrayList<String> a_Regels) {
     try {
       OutputTxt logbestand = new OutputTxt(a_OutputFile);
@@ -79,7 +104,14 @@ public class TxtBestand {
     }
   }
 
-  static ArrayList<String> readTxtBestand(String a_path) {
+  // Private functions
+  /**
+   * Read file content
+   * 
+   * @param a_path Filenamen
+   * @return Read Lines
+   */
+  private ArrayList<String> readTxtBestand(String a_path) {
     ArrayList<String> l_regels = new ArrayList<String>();
     // read file into stream, try-with-resources
     try (Stream<String> stream = Files.lines(Paths.get(a_path))) {

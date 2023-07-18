@@ -15,6 +15,7 @@ public class TxtBestandTest extends TxtBestand {
 //  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private String m_OutputDir;
   private String m_DirGen = "TxtBestand";
+  private String c_InpFile = "test1.txt";
   private String c_GenFile = "test_out.txt";
   private String c_ExpFile1 = "test_out.txt";
   private String c_ExpFile2 = "test_out2.txt";
@@ -25,7 +26,7 @@ public class TxtBestandTest extends TxtBestand {
 
   @Before
   public void setUp() throws Exception {
-    File ll_file = FileUtils.GetResourceFile("test1.txt");
+    File ll_file = FileUtils.GetResourceFile(c_InpFile);
     m_OutputDir = ll_file.getParent();
 
     File lfile2 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile1);
@@ -55,10 +56,19 @@ public class TxtBestandTest extends TxtBestand {
     bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile1);
     assertTrue(bstat);
 
-    v_Regels = TxtBestand.readTxtBestand(m_OutputDir + "\\" + "Test1.txt");
+    TxtBestand tbst1 = new TxtBestand(m_OutputDir + "\\" + c_InpFile);
+    v_Regels = tbst1.getTxtContent();
     tbst.DumpBestand(v_Regels, true);
     bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile2);
     assertTrue(bstat);
   }
 
+  @Test
+  public void testgetTxtContent() {
+    TxtBestand tbst = new TxtBestand(m_OutputDir + "\\" + c_InpFile);
+    ArrayList<String> v_Regels = new ArrayList<String>();
+    v_Regels = tbst.getTxtContent();
+    boolean bstat = v_Regels.isEmpty();
+    assertFalse(bstat);
+  }
 }
