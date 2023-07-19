@@ -38,7 +38,6 @@ public class TimeConversionTest extends TestCase {
     Duration v_period = Duration.between(v_StartTime, v_FinishTime);
     String str = TimeConversion.formatDuration(v_period);
     assertTrue(str.equalsIgnoreCase("2:10:00"));
-
   }
 
 }
