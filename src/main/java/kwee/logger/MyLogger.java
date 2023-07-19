@@ -2,7 +2,7 @@ package kwee.logger;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.util.logging.ConsoleHandler;
+//import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -33,16 +33,19 @@ public class MyLogger {
    * @throws IOException Exception
    */
   static public void setup(Level a_level, String a_logdir, Boolean a_toFile) throws IOException {
-
     // suppress the logging output to the console
     Logger rootLogger = Logger.getLogger("");
     Handler[] handlers = rootLogger.getHandlers();
 
+    /*
+    @formatter:off
     if (handlers.length > 0) {
       if (handlers[0] instanceof ConsoleHandler) {
         // rootLogger.removeHandler(handlers[0]);
       }
     }
+    @formatter:on
+    */
     rootLogger.setLevel(a_level);
 
     formatterConsTxt = new MyConsTxtFormatter();
@@ -65,7 +68,7 @@ public class MyLogger {
         fileHTML.setFormatter(formatterHTML);
         rootLogger.addHandler(fileHTML);
       } catch (AccessDeniedException e) {
-        // Niets
+        // Do nothing
       }
     }
     textAreaHand = new TextAreaHandler();
