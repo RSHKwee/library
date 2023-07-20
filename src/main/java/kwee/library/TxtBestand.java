@@ -89,6 +89,18 @@ public class TxtBestand {
     }
   }
 
+  public static void DumpBestand(String a_OutputFile, String a_Header, ArrayList<String> a_Regels) {
+    try {
+      OutputTxt logbestand = new OutputTxt(a_OutputFile);
+      logbestand.SetHeader(a_Header);
+      logbestand.SetFooter("# " + a_OutputFile);
+      logbestand.Schrijf(a_Regels);
+      logbestand.Close();
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, e.getMessage());
+    }
+  }
+
   /**
    * Dump lines to OutputFile in XML format
    * 
