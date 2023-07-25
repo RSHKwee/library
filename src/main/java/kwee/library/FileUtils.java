@@ -279,6 +279,7 @@ public class FileUtils {
       String line;
       while ((line = reader.readLine()) != null) {
         if (!line.startsWith(a_comment)) {
+          line = line.strip();
           content.append(line);
         }
       }
