@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 import junit.framework.TestCase;
@@ -38,6 +39,13 @@ public class TimeConversionTest extends TestCase {
     Duration v_period = Duration.between(v_StartTime, v_FinishTime);
     String str = TimeConversion.formatDuration(v_period);
     assertTrue(str.equalsIgnoreCase("2:10:00"));
+  }
+
+  public void testConvertExcelDate() {
+    double excelDate = 44887.0;
+    Date dt = TimeConversion.convertExcelDate(excelDate);
+    String str = dt.toString();
+    assertTrue(str.equalsIgnoreCase("Tue Nov 22 01:00:00 CET 2022"));
   }
 
 }
