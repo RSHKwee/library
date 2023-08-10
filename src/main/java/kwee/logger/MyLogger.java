@@ -16,6 +16,8 @@ import java.util.logging.SimpleFormatter;
  *
  */
 public class MyLogger {
+  static private String c_LoggerName = "";
+
   static private FileHandler fileTxt;
   static private SimpleFormatter formatterTxt;
   static private SimpleFormatter formatterConsTxt;
@@ -34,7 +36,7 @@ public class MyLogger {
    */
   static public void setup(Level a_level, String a_logdir, Boolean a_toFile) throws IOException {
     // suppress the logging output to the console
-    Logger rootLogger = Logger.getLogger("");
+    Logger rootLogger = Logger.getLogger(c_LoggerName);
     Handler[] handlers = rootLogger.getHandlers();
 
     /*
@@ -82,9 +84,13 @@ public class MyLogger {
    * @param a_level New Log level
    */
   static public void changeLogLevel(Level a_level) {
-    Handler[] handlers = Logger.getLogger("").getHandlers();
+    Handler[] handlers = Logger.getLogger(c_LoggerName).getHandlers();
     for (int index = 0; index < handlers.length; index++) {
       handlers[index].setLevel(a_level);
     }
+  }
+
+  static public Logger getLogger() {
+    return Logger.getLogger(c_LoggerName);
   }
 } // Eof
