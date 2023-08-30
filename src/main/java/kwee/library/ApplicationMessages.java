@@ -13,8 +13,7 @@ public class ApplicationMessages {
   // Private constructor to prevent instantiation from other classes
   private ApplicationMessages() {
     // java.util.MissingResourceException
-    locale = new Locale("nl", "NL"); // Dutch locale for Euro format
-
+    locale = Locale.getDefault();
     // Load the resource bundle from the "translations" subfolder
     bundle = ResourceBundle.getBundle("translations/messages", locale);
   }
@@ -67,7 +66,28 @@ public class ApplicationMessages {
     return formattedMessage;
   }
 
+  public String getMessage(String a_MsgId, int a_arg1, int a_arg2) {
+    // Retrieve the message from the bundle
+    String messageTemplate = bundle.getString(a_MsgId);
+    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
+    return formattedMessage;
+  }
+
+  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, int a_arg3) {
+    // Retrieve the message from the bundle
+    String messageTemplate = bundle.getString(a_MsgId);
+    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
+    return formattedMessage;
+  }
+
   public String getMessage(String a_MsgId, String a_arg1, String a_arg2) {
+    // Retrieve the message from the bundle
+    String messageTemplate = bundle.getString(a_MsgId);
+    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
+    return formattedMessage;
+  }
+
+  public String getMessage(String a_MsgId, String a_arg1, int a_arg2) {
     // Retrieve the message from the bundle
     String messageTemplate = bundle.getString(a_MsgId);
     String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
