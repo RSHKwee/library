@@ -51,6 +51,15 @@ public class ApplicationMessages {
     return m_availableLanguages.keySet();
   }
 
+  public String getLanguageName(String languageCode) {
+    String LanguageName = "";
+    if (m_availableLanguages.get(languageCode) != null) {
+      Locale newLocale = new Locale(languageCode);
+      LanguageName = newLocale.getDisplayLanguage(newLocale);
+    }
+    return LanguageName;
+  }
+
   public String getMessage(String a_MsgId) {
     String messageTemplate = m_bundle.getString(a_MsgId);
     return messageTemplate;
