@@ -8,9 +8,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kwee.library.Githubchecker;
 
@@ -18,7 +23,7 @@ public class AboutWindow extends Application {
   /**
    * About window
    */
-  private static final long serialVersionUID = 2081335010942922822L;
+  // private static final long serialVersionUID = 2081335010942922822L;
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
 
   private String c_Owner = "rshkwee";
@@ -30,14 +35,8 @@ public class AboutWindow extends Application {
     // Create a new stage for the "About" window
     Stage aboutStage = new Stage();
     aboutStage.setTitle("About");
-
-//    setTitle("GitHub Update Window");
-    // setSize(450, 300);
-    // setLocation(150, 150);
-    // setLayout(new FlowLayout());
-
+    aboutStage.initModality(Modality.APPLICATION_MODAL); // This makes it a modal window.
     titleLabel = new Label("About");
-    // add(titleLabel);
 
     downloadButton = new Button("Download");
     downloadButton.setDisable(true);
@@ -61,20 +60,27 @@ public class AboutWindow extends Application {
       l_message = l_message + "\n\n" + "\t No versions available. ";
     }
     updateTextArea.setText(l_message);
-//    add(updateTextArea);
-    // add(downloadButton);
 
     Button OKButton = new Button("OK");
     OKButton.setOnAction(e -> {
-//      dispose();     
+      aboutStage.close();
     });
 
-    // addWindowListener(new WindowAdapter() {
-    // @Override
-    // public void windowClosing(WindowEvent windowEvent) {
-    // dispose();
-    // }
-//    });
+    // Create a layout to hold the content
+    HBox layoutbuttons = new HBox();
+    VBox layout = new VBox(10);
+    layoutbuttons.setAlignment(Pos.CENTER);
+    layoutbuttons.getChildren().addAll(OKButton, downloadButton);
+
+    layout.setAlignment(Pos.CENTER);
+    layout.getChildren().addAll(titleLabel, updateTextArea, layoutbuttons);
+
+    // Create the scene
+    Scene scene = new Scene(layout, 500, 200);
+
+    // Set the scene for the About window
+    aboutStage.setScene(scene);
+    aboutStage.show();
   }
 
   private void openDownloadLink(String owner, String repoName) {
