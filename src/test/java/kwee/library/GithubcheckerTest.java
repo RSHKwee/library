@@ -19,7 +19,7 @@ public class GithubcheckerTest {
   @Test
   public void testGetReleases() {
     String latest = Githubchecker.getReleases("RSHKwee", "ing2ofx");
-    assertTrue(latest.contains("0.2"));
+    assertTrue(latest.contains("1.0"));
   }
 
   @Test

@@ -1,13 +1,19 @@
 package kwee.library;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TimeConversion {
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
   /**
    * 
    * @param a_time
@@ -46,5 +52,22 @@ public class TimeConversion {
     long excelEpochInMillis = (long) ((excelDateValue - 25569) * 86400000);
     Date javaDate = new Date(excelEpochInMillis);
     return javaDate;
+  }
+
+  /**
+   * Convert "d-MM-yyyy" to Date.
+   * 
+   * @param a_date String "d-MM-yyyy"
+   * @return
+   */
+  public static Date stringToDate(String a_date) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+    Date date = new Date();
+    try {
+      date = dateFormat.parse(a_date);
+    } catch (ParseException e) {
+      LOGGER.log(Level.INFO, e.getMessage());
+    }
+    return date;
   }
 }

@@ -20,4 +20,15 @@ public class DateToNumeric {
     }
     return ls_date;
   }
+
+  public static Date String_NumericToDate(String a_date) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    Date date = new java.util.Date();
+    try {
+      date = dateFormat.parse(a_date);
+    } catch (Exception e) {
+      LOGGER.log(Level.WARNING, "Can't parse Date: " + a_date + " : " + e.getMessage());
+    }
+    return date;
+  }
 }
