@@ -22,12 +22,18 @@ public class DateToNumeric {
   }
 
   public static Date String_NumericToDate(String a_date) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmm");
     Date date = new java.util.Date();
     try {
       date = dateFormat.parse(a_date);
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "Can't parse Date: " + a_date + " : " + e.getMessage());
+      try {
+        LOGGER.log(Level.FINE, "Can't parse Date: " + a_date + " : " + e.getMessage());
+        dateFormat = new SimpleDateFormat("yyyyMMdd");
+        date = dateFormat.parse(a_date);
+      } catch (Exception e1) {
+        LOGGER.log(Level.WARNING, "Can't parse Date: " + a_date + " : " + e1.getMessage());
+      }
     }
     return date;
   }
