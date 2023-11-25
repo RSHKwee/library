@@ -1,4 +1,4 @@
-package kwee.logger;
+package kwee.library.swing;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

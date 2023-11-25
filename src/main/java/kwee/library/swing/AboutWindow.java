@@ -1,4 +1,4 @@
-package kwee.library;
+package kwee.library.swing;
 
 import java.awt.Button;
 import java.awt.Desktop;
@@ -16,6 +16,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import kwee.library.Githubchecker;
 
 public class AboutWindow extends Frame {
   /**

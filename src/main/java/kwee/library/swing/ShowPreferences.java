@@ -1,4 +1,4 @@
-package kwee.library;
+package kwee.library.swing;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

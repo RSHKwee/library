@@ -1,7 +1,9 @@
 package zandbak;
 
 import javax.swing.*;
-import kwee.library.ShowPreferences;
+
+import kwee.library.swing.ShowPreferences;
+
 import java.awt.event.*;
 import java.util.prefs.Preferences;
 
