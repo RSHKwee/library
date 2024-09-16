@@ -7,38 +7,31 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 import kwee.library.Githubchecker;
 
-public class AboutWindow extends Application {
+public class AboutWindow {
   /**
    * About window
    */
-  private static final long serialVersionUID = 2081335010942922822L;
+  // private static final long serialVersionUID = 2081335010942922822L;
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
 
   private String c_Owner = "rshkwee";
-  private Label titleLabel;
   private TextArea updateTextArea;
   private Button downloadButton;
 
   public AboutWindow(String repoName, String creationtime, String CopyYear) {
     // Create a new stage for the "About" window
     Stage aboutStage = new Stage();
-    aboutStage.setTitle("About");
+    aboutStage.setTitle("About " + repoName);
 
-//    setTitle("GitHub Update Window");
-    // setSize(450, 300);
-    // setLocation(150, 150);
-    // setLayout(new FlowLayout());
-
-    titleLabel = new Label("About");
-    // add(titleLabel);
-
+    // Create UI components for displaying information
     downloadButton = new Button("Download");
     downloadButton.setDisable(true);
     downloadButton.setVisible(false);
@@ -61,20 +54,24 @@ public class AboutWindow extends Application {
       l_message = l_message + "\n\n" + "\t No versions available. ";
     }
     updateTextArea.setText(l_message);
-//    add(updateTextArea);
-    // add(downloadButton);
 
     Button OKButton = new Button("OK");
     OKButton.setOnAction(e -> {
-//      dispose();     
+      aboutStage.close();
     });
 
-    // addWindowListener(new WindowAdapter() {
-    // @Override
-    // public void windowClosing(WindowEvent windowEvent) {
-    // dispose();
-    // }
-//    });
+    // Create a layout to organize the components
+    HBox hbox = new HBox(downloadButton, OKButton);
+
+    VBox vbox = new VBox(10);
+    vbox.getChildren().addAll(updateTextArea, hbox);
+
+    // Create a scene and set it in the stage
+    Scene scene = new Scene(vbox, 300, 200);
+    aboutStage.setScene(scene);
+
+    // Show the "About" window
+    aboutStage.show();
   }
 
   private void openDownloadLink(String owner, String repoName) {
@@ -84,11 +81,5 @@ public class AboutWindow extends Application {
     } catch (IOException | URISyntaxException e) {
       LOGGER.log(Level.INFO, e.getMessage());
     }
-  }
-
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    // TODO Auto-generated method stub
-
   }
 }
