@@ -1,13 +1,27 @@
 package kwee.library;
 
+/**
+ * Time conversion functions.
+ * 
+ * @author René
+ *
+ */
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TimeConversion {
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
   /**
    * 
    * @param a_time
@@ -24,9 +38,10 @@ public class TimeConversion {
   }
 
   /**
+   * Convert Duration to String
    * 
-   * @param duration
-   * @return
+   * @param duration Duration
+   * @return Duration as String
    */
   public static String formatDuration(Duration duration) {
     long seconds = duration.getSeconds();
@@ -46,5 +61,59 @@ public class TimeConversion {
     long excelEpochInMillis = (long) ((excelDateValue - 25569) * 86400000);
     Date javaDate = new Date(excelEpochInMillis);
     return javaDate;
+  }
+
+  /**
+   * Convert "d-MM-yyyy" to Date.
+   * 
+   * @param a_date String "d-MM-yyyy"
+   * @return
+   */
+  public static Date stringToDate(String a_date) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+    Date date = new Date();
+    try {
+      date = dateFormat.parse(a_date);
+    } catch (ParseException e) {
+      LOGGER.log(Level.INFO, e.getMessage());
+    }
+    return date;
+  }
+
+  /**
+   * Get TimeZone for given country
+   * 
+   * @param countryCode Country
+   * @return TimeZone for given country
+   */
+  public static TimeZone getTimeZone(String countryCode) {
+    // Get all available time zone IDs
+    String[] availableIDs = TimeZone.getAvailableIDs();
+
+    // Iterate through time zones and find one associated with the country
+    for (String timeZoneID : availableIDs) {
+      TimeZone timeZone = TimeZone.getTimeZone(timeZoneID);
+      Locale timeZoneLocale = timeZoneToLocale(timeZone);
+
+      // Check if the country code matches
+      if (timeZoneLocale.getCountry().equals(countryCode)) {
+        return timeZone;
+      }
+    }
+    return TimeZone.getDefault();
+  }
+
+  /**
+   * Extract the language and country information from the time zone ID
+   * 
+   * @param timeZone TimeZone to be converted
+   * @return Locale
+   */
+  private static Locale timeZoneToLocale(TimeZone timeZone) {
+    String[] parts = timeZone.getID().split("/");
+    if (parts.length >= 2) {
+      return new Locale("", parts[0], parts[1]);
+    }
+    return Locale.getDefault();
   }
 }

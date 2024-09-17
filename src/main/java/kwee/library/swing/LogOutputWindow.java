@@ -1,4 +1,4 @@
-package kwee.logger;
+package kwee.library.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import kwee.logger.MyLogger;
 
 public class LogOutputWindow {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
