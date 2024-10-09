@@ -19,6 +19,8 @@ package kwee.library;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -89,20 +91,23 @@ public class NominatimAPI {
     this.zoomLevel = zoomLevel;
   }
 
+// https://nominatim.openstreetmap.org
+//    /reverse.php?lat=52.12511345414349&lon=5.348694341046372&zoom=18&format=jsonv2
   public Address getAdress(double lat, double lon) {
     Address result = null;
-    String urlString = NominatimInstance + "/reverse?format=json&addressdetails=1&lat=" + String.valueOf(lat) + "&lon="
-        + String.valueOf(lon) + "&zoom=" + zoomLevel;
+    String urlString = NominatimInstance + "/reverse.php?lat=" + String.valueOf(lat) + "&lon=" + String.valueOf(lon)
+        + "&zoom=" + zoomLevel + "&format=jsonv2";
     try {
       result = new Address(getJSON(urlString), zoomLevel);
-    } catch (IOException e) {
-      LOGGER.log(Level.WARNING, "Can't connect to server." + e.getMessage());
+    } catch (IOException | URISyntaxException e) {
+      LOGGER.log(Level.WARNING, "Can't connect to server.\n" + e.getMessage());
     }
     return result;
   }
 
-  private String getJSON(String urlString) throws IOException {
-    URL url = new URL(urlString);
+  private String getJSON(String urlString) throws IOException, URISyntaxException {
+    // URL url = new URL(urlString);
+    URL url = new URI(urlString).toURL();
     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
     conn.addRequestProperty("User-Agent", "Mozilla/4.76");
