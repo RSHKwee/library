@@ -1,6 +1,7 @@
 package kwee.library;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -26,7 +27,7 @@ public class TimeConversionTest extends TestCase {
     ZoneId lZone = ZoneId.systemDefault();
 
     ZonedDateTime zonedDateTime = ZonedDateTime.of(v_StartTime, lZone); // Assuming you have a ZonedDateTime object
-    Optional<ZonedDateTime> optionalDateTime = Optional.ofNullable(zonedDateTime);
+    Optional<Instant> optionalDateTime = Optional.ofNullable(zonedDateTime).map(ZonedDateTime::toInstant);
 
     LocalDateTime v_LocalTime = TimeConversion.timeZoned2Local(optionalDateTime);
     assertEquals(v_StartTime, v_LocalTime);

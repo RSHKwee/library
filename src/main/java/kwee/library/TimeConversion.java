@@ -9,6 +9,7 @@ package kwee.library;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -24,14 +25,17 @@ public class TimeConversion {
 
   /**
    * 
-   * @param a_time
+   * @param optional
    * @return
    */
-  public static LocalDateTime timeZoned2Local(Optional<ZonedDateTime> a_time) {
-    Optional<ZonedDateTime> v_starttime = a_time;
+  public static LocalDateTime timeZoned2Local(Optional<Instant> optional) {
+    ZoneId zoneId = ZoneId.systemDefault(); // Gebruik de standaard tijdzone
+
+    // Converteer Optional<Instant> naar Optional<ZonedDateTime>
+    Optional<ZonedDateTime> v_starttime = optional.map(instant -> instant.atZone(zoneId));
 
     ZonedDateTime utcZoned = ZonedDateTime.parse(v_starttime.get().toString());
-    ZoneId timeZone = ZoneId.of("Europe/Amsterdam");
+    ZoneId timeZone = ZoneId.systemDefault(); // Gebruik de standaard tijdzone
     ZonedDateTime timeZoned = utcZoned.withZoneSameInstant(timeZone);
     LocalDateTime timeLocal = timeZoned.toLocalDateTime();
     return timeLocal;
