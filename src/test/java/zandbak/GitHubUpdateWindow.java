@@ -21,7 +21,7 @@ public class GitHubUpdateWindow extends Frame {
   */
   private static final long serialVersionUID = 2081335010942922822L;
   private Label titleLabel;
-  private String c_CopyrightYear = "2023";
+  private String c_CopyrightYear = "2025";
   private TextArea updateTextArea;
   private Button downloadButton;
   private String m_creationtime = "v0.0.0.0";
