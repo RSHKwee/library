@@ -14,9 +14,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import kwee.logger.MyLogger;
 
 public class ShowPreferences {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 //  private static final long serialVersionUID = -1843277101051214801L;
   private Preferences preferences;
   private String m_clsname = "";

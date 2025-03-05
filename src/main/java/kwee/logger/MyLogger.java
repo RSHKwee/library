@@ -1,6 +1,7 @@
 package kwee.logger;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.AccessDeniedException;
 //import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -18,7 +19,7 @@ import kwee.library.swing.TextAreaHandler;
  *
  */
 public class MyLogger {
-  static private String c_LoggerName = "";
+  static private String c_LoggerName = "kw";
 
   static private FileHandler fileTxt;
   static private SimpleFormatter formatterTxt;
@@ -54,6 +55,7 @@ public class MyLogger {
 
     formatterConsTxt = new MyConsTxtFormatter();
     handlers[0].setFormatter(formatterConsTxt);
+    handlers[0].setEncoding("UTF-8");
 
     if (a_toFile) {
       // create a TXT formatter
@@ -64,11 +66,12 @@ public class MyLogger {
 
       try {
         fileTxt = new FileHandler(a_logdir + "Logging.txt");
-        fileHTML = new FileHandler(a_logdir + "Logging.html");
-
+        fileTxt.setEncoding("UTF-8");
         fileTxt.setFormatter(formatterTxt);
         rootLogger.addHandler(fileTxt);
 
+        fileHTML = new FileHandler(a_logdir + "Logging.html");
+        fileHTML.setEncoding("UTF-8");
         fileHTML.setFormatter(formatterHTML);
         rootLogger.addHandler(fileHTML);
       } catch (AccessDeniedException e) {
@@ -87,8 +90,17 @@ public class MyLogger {
    */
   static public void changeLogLevel(Level a_level) {
     Handler[] handlers = Logger.getLogger(c_LoggerName).getHandlers();
-    for (int index = 0; index < handlers.length; index++) {
-      handlers[index].setLevel(a_level);
+    try {
+      for (int index = 0; index < handlers.length; index++) {
+        handlers[index].setLevel(a_level);
+        handlers[index].setEncoding("UTF-8");
+      }
+    } catch (SecurityException e) {
+      // TODO Auto-generated catch block
+      // e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      // e.printStackTrace();
     }
   }
 

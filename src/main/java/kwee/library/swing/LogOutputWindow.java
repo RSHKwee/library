@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import kwee.logger.MyLogger;
 
 public class LogOutputWindow {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   static public JFrame outputWindow(String a_Title, Level a_Level, String a_RootDir, Boolean a_toDisk) {
     JTextArea output = new JTextArea();

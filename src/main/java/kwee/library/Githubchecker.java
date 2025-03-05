@@ -13,8 +13,10 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kwee.logger.MyLogger;
+
 public class Githubchecker {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   public static String getReleases(String owner, String repoName) {
     String latestTag = "";

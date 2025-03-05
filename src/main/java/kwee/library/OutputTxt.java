@@ -3,6 +3,8 @@ package kwee.library;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import kwee.logger.MyLogger;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  *
  */
 public class OutputTxt {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private String m_charset = "ISO-8859-1";
 
   private String m_Header = "";

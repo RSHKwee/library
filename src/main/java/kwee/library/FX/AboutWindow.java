@@ -14,13 +14,14 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import kwee.library.Githubchecker;
+import kwee.logger.MyLogger;
 
 public class AboutWindow {
   /**
    * About window
    */
   // private static final long serialVersionUID = 2081335010942922822L;
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   private String c_Owner = "rshkwee";
   private TextArea updateTextArea;
@@ -35,7 +36,7 @@ public class AboutWindow {
     downloadButton = new Button("Download");
     downloadButton.setDisable(true);
     downloadButton.setVisible(false);
-    downloadButton.setOnAction(e -> {
+    downloadButton.setOnAction(_ -> {
       openDownloadLink(c_Owner, repoName);
     });
 

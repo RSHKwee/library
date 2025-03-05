@@ -25,6 +25,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import kwee.logger.MyLogger;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
  *
  */
 public class NominatimAPI {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private final String NominatimInstance = "https://nominatim.openstreetmap.org";
 
   /**

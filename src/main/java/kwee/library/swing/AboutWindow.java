@@ -18,13 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import kwee.library.Githubchecker;
+import kwee.logger.MyLogger;
 
 public class AboutWindow extends Frame {
   /**
    * About window
    */
   private static final long serialVersionUID = 2081335010942922822L;
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   private String c_Owner = "rshkwee";
   private Label titleLabel;

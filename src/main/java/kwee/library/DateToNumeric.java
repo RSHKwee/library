@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import kwee.logger.MyLogger;
+
 /**
  * Routines to convert Date to String ("yyyyMMdd") and vice versa.
  * 
@@ -13,7 +15,7 @@ import java.util.logging.Logger;
  *
  */
 public class DateToNumeric {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   /**
    * Convert Date object to String "yyyyMMdd".

@@ -5,8 +5,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import kwee.logger.MyLogger;
+
 public class ApplicationProperties {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   private final Properties properties;
 

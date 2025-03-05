@@ -16,6 +16,8 @@ import java.util.Date;
  *
  */
 public class JarInfo {
+  static final String c_CopyrightYear = "2025"; // Fallback
+
   /**
    * Converteer time naar een leesbare tekst.
    *
@@ -45,6 +47,25 @@ public class JarInfo {
   }
 
   /**
+   * Haal Jaartal op voor Class naam.
+   * 
+   * @param cl Class naam
+   * @return String
+   */
+  public static String getYear(Class<?> cl) {
+    try {
+      String rn = cl.getName().replace('.', '/') + ".class";
+      JarURLConnection j = (JarURLConnection) ClassLoader.getSystemResource(rn).openConnection();
+
+      Date date = new Date(j.getJarFile().getEntry("META-INF/MANIFEST.MF").getTime());
+      Format format = new SimpleDateFormat("yyyy");
+      return format.format(date);
+    } catch (Exception e) {
+      return c_CopyrightYear;
+    }
+  }
+
+  /**
    * Class naam waar info voor wordt opgehaald.
    * 
    * @param cl Class naam
@@ -62,13 +83,14 @@ public class JarInfo {
     return v_time;
   }
 
+  /**
+   * 
+   * 
+   * @param cl
+   * @return
+   * @throws FileNotFoundException
+   */
   public static String getJarFilenaam(Class<?> cl) throws FileNotFoundException {
-    // File jarDir = new
-    // File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
-    // return jarDir.getAbsolutePath();
-
-    // File(cl.class.getProtectionDomain().getCodeSource().getLocation().toURI());‌
-
     String path = cl.getResource(cl.getSimpleName() + ".class").getFile();
     if (path.startsWith("/")) {
       throw new FileNotFoundException("This is not a jar file: \n" + path);
@@ -78,6 +100,12 @@ public class JarInfo {
     return new File(path.substring(0, path.lastIndexOf('!'))).toString();
   }
 
+  /**
+   * 
+   * 
+   * @param cl
+   * @return
+   */
   public static String getProjectVersion(Class<?> cl) {
     String l_version = "";
     try {

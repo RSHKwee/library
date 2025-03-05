@@ -6,8 +6,10 @@ import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kwee.logger.MyLogger;
+
 public class Address {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   private int lod = -1;
   private long osm_id = -1;

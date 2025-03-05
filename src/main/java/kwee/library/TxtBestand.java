@@ -9,8 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import kwee.logger.MyLogger;
+
 public class TxtBestand {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private String m_charset = "ISO-8859-1";
 
   private String m_Filenaam = "";

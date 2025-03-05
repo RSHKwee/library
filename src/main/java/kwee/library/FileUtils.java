@@ -6,8 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import kwee.logger.MyLogger;
+
 public class FileUtils {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   /** A convenience method to throw an exception */
   private static void abort(String msg) throws IOException {
@@ -15,8 +17,7 @@ public class FileUtils {
   }
 
   /**
-   * Controleer of een directory bestaat, indien niet bestaand dan creeer de
-   * directory.
+   * Controleer of een directory bestaat, indien niet bestaand dan creeer de directory.
    * 
    * @param a_dir Directory pad
    */
@@ -87,9 +88,8 @@ public class FileUtils {
   }
 
   /**
-   * The static method that actually performs the file copy. Before copying the
-   * file, however, it performs a lot of tests to make sure everything is as it
-   * should be.
+   * The static method that actually performs the file copy. Before copying the file, however, it performs a lot of
+   * tests to make sure everything is as it should be.
    */
   static void copy(String from_name, String to_name) throws IOException {
     File from_file = new File(from_name); // Get File objects from Strings
