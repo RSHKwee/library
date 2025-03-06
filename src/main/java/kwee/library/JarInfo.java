@@ -59,9 +59,9 @@ public class JarInfo {
 
       Date date = new Date(j.getJarFile().getEntry("META-INF/MANIFEST.MF").getTime());
       Format format = new SimpleDateFormat("yyyy");
-      return format.format(date);
+      return "© " + format.format(date);
     } catch (Exception e) {
-      return c_CopyrightYear;
+      return "© " + c_CopyrightYear;
     }
   }
 

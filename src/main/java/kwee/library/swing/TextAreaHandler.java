@@ -1,6 +1,5 @@
 package kwee.library.swing;
 
-import java.awt.Font;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 //import java.text.SimpleDateFormat;
@@ -32,7 +31,6 @@ public class TextAreaHandler extends java.util.logging.Handler {
 
       @Override
       public void run() {
-        Font customFont = new Font("Arial", Font.PLAIN, 14);
         StringWriter text = new StringWriter();
         PrintWriter out = new PrintWriter(text);
         if (!record.getMessage().contentEquals(" ") && !record.getMessage().isEmpty()) {
@@ -42,7 +40,6 @@ public class TextAreaHandler extends java.util.logging.Handler {
           out.println(textArea.getText());
           out.printf("  %s", record.getMessage());
         }
-        textArea.setFont(customFont);
         textArea.setText(text.toString());
       }
     });

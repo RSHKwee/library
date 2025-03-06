@@ -43,7 +43,7 @@ public class AboutWindow {
     updateTextArea = new TextArea();
     updateTextArea.setEditable(false);
     String latest = Githubchecker.getReleases(c_Owner, repoName);
-    String l_message = " \t" + repoName + " version " + creationtime + "\n\n \tCopyright © " + CopyYear;
+    String l_message = " \t" + repoName + " version " + creationtime + "\n\n \tCopyright " + CopyYear;
 
     if (Githubchecker.isUpdateAvailable(creationtime, latest)) {
       downloadButton.setDisable(false);
@@ -57,7 +57,7 @@ public class AboutWindow {
     updateTextArea.setText(l_message);
 
     Button OKButton = new Button("OK");
-    OKButton.setOnAction(e -> {
+    OKButton.setOnAction(_ -> {
       aboutStage.close();
     });
 

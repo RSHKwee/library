@@ -19,7 +19,7 @@ public class GithubcheckerTest {
   @Test
   public void testGetReleases() {
     String latest = Githubchecker.getReleases("RSHKwee", "ing2ofx");
-    assertTrue(latest.contains("1.0"));
+    assertTrue(latest.contains("1.1.0"));
   }
 
   @Test
@@ -33,5 +33,7 @@ public class GithubcheckerTest {
     assertFalse(Githubchecker.isUpdateAvailable("0.2.7.0 (05-jul.-2023 17:03:30)", "v0.2.6.0"));
     assertFalse(Githubchecker.isUpdateAvailable("0.2.7.0 (05-jul.-2023 17:03:30)", "v0.2.7.0"));
     assertTrue(Githubchecker.isUpdateAvailable("", "v0.2.6.0"));
+    assertFalse(Githubchecker.isUpdateAvailable("1.1.0.3", "v1.1.0.2"));
+    assertFalse(Githubchecker.isUpdateAvailable("v1.1.0.3 (05-jul.-2023 17:03:30)", "1.1.0.2"));
   }
 }

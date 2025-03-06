@@ -54,7 +54,7 @@ public class AboutWindow extends Frame {
     updateTextArea = new TextArea();
     updateTextArea.setEditable(false);
     String latest = Githubchecker.getReleases(c_Owner, repoName);
-    String l_message = " \t" + repoName + " version " + creationtime + "\n\n \tCopyright © " + CopyYear;
+    String l_message = " \t" + repoName + " version " + creationtime + "\n\n \tCopyright " + CopyYear;
 
     if (Githubchecker.isUpdateAvailable(creationtime, latest)) {
       downloadButton.setEnabled(true);
