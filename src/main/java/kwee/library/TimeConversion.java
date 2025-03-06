@@ -20,8 +20,10 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import kwee.logger.MyLogger;
+
 public class TimeConversion {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   /**
    * 
@@ -93,7 +95,7 @@ public class TimeConversion {
   public static TimeZone getTimeZone(String countryCode) {
     // Get all available time zone IDs
     String[] availableIDs = TimeZone.getAvailableIDs();
-
+    LOGGER.log(Level.INFO, " getTimeZone/countryCode : " + countryCode);
     // Iterate through time zones and find one associated with the country
     for (String timeZoneID : availableIDs) {
       TimeZone timeZone = TimeZone.getTimeZone(timeZoneID);
@@ -116,6 +118,7 @@ public class TimeConversion {
   private static Locale timeZoneToLocale(TimeZone timeZone) {
     String[] parts = timeZone.getID().split("/");
     if (parts.length >= 2) {
+      // return new Locale.Builder().setRegion(parts[0]).setVariant(parts[1]).build();
       return new Locale("", parts[0], parts[1]);
     }
     return Locale.getDefault();

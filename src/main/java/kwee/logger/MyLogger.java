@@ -19,7 +19,7 @@ import kwee.library.swing.TextAreaHandler;
  *
  */
 public class MyLogger {
-  static private String c_LoggerName = "kw";
+  static private String c_LoggerName = "";
 
   static private FileHandler fileTxt;
   static private SimpleFormatter formatterTxt;

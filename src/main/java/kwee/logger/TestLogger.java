@@ -5,7 +5,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class TestLogger {
-  private static final Logger logger = Logger.getLogger(Class.class.getName());
+  private static final Logger logger = MyLogger.getLogger();
   private static ByteArrayHandler handler;
 
   static public void setup(Level a_Level) {

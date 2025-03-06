@@ -1,12 +1,14 @@
 package kwee.library;
 
 import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 import junit.framework.TestCase;
+//import kwee.logger.MyLogger;
 import kwee.logger.TestLogger;
 
 public class NominatimAPITest extends TestCase {
-//  private static final Logger logger = Logger.getLogger(Class.class.getName());
+//  private static final Logger logger = MyLogger.getLogger();
   private NominatimAPI m_Api;
 
   @Override

@@ -11,8 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+// import kwee.logger.MyLogger;
+
 public class TxtBestandTest extends TxtBestand {
-//  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+//  private static final Logger LOGGER = MyLogger.getLogger();
   private String m_OutputDir;
   private String m_DirGen = "TxtBestand";
   private String c_InpFile = "test1.txt";

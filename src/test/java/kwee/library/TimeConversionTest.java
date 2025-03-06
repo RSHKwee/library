@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import junit.framework.TestCase;
 
@@ -49,4 +50,12 @@ public class TimeConversionTest extends TestCase {
     assertTrue(str.equalsIgnoreCase("Tue Nov 22 01:00:00 CET 2022"));
   }
 
+  public void testgetTimeZone() {
+    TimeZone zone = TimeConversion.getTimeZone("Europe/Amsterdam");
+
+    double excelDate = 44887.0;
+    Date dt = TimeConversion.convertExcelDate(excelDate);
+    String str = dt.toString();
+    assertTrue(str.equalsIgnoreCase("Tue Nov 22 01:00:00 CET 2022"));
+  }
 }
