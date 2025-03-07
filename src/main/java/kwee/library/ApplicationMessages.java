@@ -42,7 +42,7 @@ public class ApplicationMessages {
 
   public void changeLanguage(String languageCode) {
     if (m_availableLanguages.get(languageCode) != null) {
-      Locale newLocale = new Locale(languageCode);
+      Locale newLocale = Locale.of(languageCode);
       setLocale(newLocale);
     }
   }
@@ -54,7 +54,7 @@ public class ApplicationMessages {
   public String getLanguageName(String languageCode) {
     String LanguageName = "";
     if (m_availableLanguages.get(languageCode) != null) {
-      Locale newLocale = new Locale(languageCode);
+      Locale newLocale = Locale.of(languageCode);
       LanguageName = newLocale.getDisplayLanguage(newLocale);
     }
     return LanguageName;
