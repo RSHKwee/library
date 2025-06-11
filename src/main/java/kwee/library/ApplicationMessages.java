@@ -1,17 +1,28 @@
 package kwee.library;
 
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Logger;
+
+import kwee.logger.MyLogger;
+
+import java.util.logging.Level;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ApplicationMessages {
   // Load the resource bundle from the "translations" subfolder
-  private String m_baseName = "translations/messages";
+  private static final Logger LOGGER = MyLogger.getLogger();
+
+  private String m_baseName = "translations/app_messages";
+  private String m_baseNameBck = "translations/messages";
+
   private Map<String, Locale> m_availableLanguages = new HashMap<String, Locale>();
 
   private ResourceBundle m_bundle;
@@ -20,9 +31,16 @@ public class ApplicationMessages {
   // Private constructor to prevent instantiation from other classes
   private ApplicationMessages() {
     // java.util.MissingResourceException
+    try {
     m_locale = Locale.getDefault();
     m_bundle = ResourceBundle.getBundle(m_baseName, m_locale);
     availableLanguages();
+    } catch (Exception e) {
+      m_locale = Locale.getDefault();
+      m_bundle = ResourceBundle.getBundle(m_baseNameBck, m_locale);
+      m_baseName = m_baseNameBck;
+    }
+    LOGGER.info("kwee.lib messages Locale: " + m_locale);
   }
 
   // Private static inner class that holds the Singleton instance
@@ -45,6 +63,7 @@ public class ApplicationMessages {
       Locale newLocale = Locale.of(languageCode);
       setLocale(newLocale);
     }
+    LOGGER.info("kwee.lib messages Locale: " + m_locale);
   }
 
   public Set<String> getTranslations() {
@@ -61,8 +80,14 @@ public class ApplicationMessages {
   }
 
   public String getMessage(String a_MsgId) {
+    try {
     String messageTemplate = m_bundle.getString(a_MsgId);
     return messageTemplate;
+    } catch (Exception e) {
+      LOGGER.log(Level.INFO,
+          " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
+    }
+    return "";
   }
 
   public String getMessage(String a_MsgId, String a_arg1) {
@@ -104,9 +129,15 @@ public class ApplicationMessages {
 
   public String getMessage(String a_MsgId, String a_arg1, String a_arg2) {
     // Retrieve the message from the bundle
+    try {
     String messageTemplate = m_bundle.getString(a_MsgId);
     String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
     return formattedMessage;
+    } catch (Exception e) {
+      LOGGER.log(Level.INFO,
+          " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
+    }
+    return "";
   }
 
   public String getMessage(String a_MsgId, String a_arg1, int a_arg2) {
@@ -123,9 +154,18 @@ public class ApplicationMessages {
     return formattedMessage;
   }
 
+  public void dumpBundle() {
+    Enumeration<String> keys = m_bundle.getKeys();
+    Collections.list(keys).stream().forEach(key -> {
+      String messageTemplate = m_bundle.getString(key);
+      LOGGER.log(Level.INFO, "Key:" + key + " Message: " + messageTemplate);
+    });
+  }
+
   // Privates
   private void setLocale(Locale locale) {
-    m_bundle = ResourceBundle.getBundle("translations/messages", locale);
+    m_bundle = ResourceBundle.getBundle(m_baseName, locale);
+    m_locale = locale;
     Locale.setDefault(locale);
   }
 

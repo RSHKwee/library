@@ -16,6 +16,8 @@
   </parent>
   
   <properties>
+    <project.description>Library</project.description>
+
     <org-json-json.version>20250107</org-json-json.version>
     <io-jenetics-jpx.version>3.2.1</io-jenetics-jpx.version>
     <fr-dudie-nominatim-api.version>3.4</fr-dudie-nominatim-api.version>

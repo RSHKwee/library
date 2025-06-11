@@ -34,6 +34,8 @@ package kwee.library;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.JarURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.InvocationTargetException;
@@ -57,27 +59,27 @@ public class JarClassLoader extends URLClassLoader {
   }
 
   /**
-   * Returns the name of the jar file main class, or null if no "Main-Class"
-   * manifest attributes was defined.
+   * Returns the name of the jar file main class, or null if no "Main-Class" manifest attributes was defined.
+   * 
+   * @throws URISyntaxException
    */
-  public String getMainClassName() throws IOException {
-    URL u = new URL("jar", "", url + "!/");
+  public String getMainClassName() throws IOException, URISyntaxException {
+    URI uri = new URI("jar", "", url + "!/");
+    URL u = uri.toURL();
+
     JarURLConnection uc = (JarURLConnection) u.openConnection();
     Attributes attr = uc.getMainAttributes();
     return attr != null ? attr.getValue(Attributes.Name.MAIN_CLASS) : null;
   }
 
   /**
-   * Invokes the application in this jar file given the name of the main class and
-   * an array of arguments. The class must define a static method "main" which
-   * takes an array of String arguemtns and is of return type "void".
+   * Invokes the application in this jar file given the name of the main class and an array of arguments. The class must
+   * define a static method "main" which takes an array of String arguemtns and is of return type "void".
    *
    * @param name the name of the main class
    * @param args the arguments for the application
-   * @exception ClassNotFoundException    if the specified class could not be
-   *                                      found
-   * @exception NoSuchMethodException     if the specified class does not contain
-   *                                      a "main" method
+   * @exception ClassNotFoundException    if the specified class could not be found
+   * @exception NoSuchMethodException     if the specified class does not contain a "main" method
    * @exception InvocationTargetException if the application raised an exception
    */
   public void invokeClass(String name, String[] args)

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,8 @@ public class Githubchecker {
   public static String getReleases(String owner, String repoName) {
     String latestTag = "";
     try {
-      URL url = new URL("https://api.github.com/repos/" + owner + "/" + repoName + "/releases/latest");
+      URI uri = new URI("https://api.github.com/repos/" + owner + "/" + repoName + "/releases/latest");
+      URL url = uri.toURL();
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
@@ -55,7 +58,7 @@ public class Githubchecker {
         LOGGER.log(Level.FINE, "Failed to fetch the latest release information. Response code: " + responseCode);
       }
       connection.disconnect();
-    } catch (IOException e) {
+    } catch (IOException | URISyntaxException e) {
       LOGGER.log(Level.WARNING, e.getMessage());
     }
     return latestTag;

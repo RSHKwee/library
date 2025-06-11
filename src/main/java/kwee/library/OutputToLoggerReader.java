@@ -10,10 +10,8 @@ import java.util.logging.Logger;
  */
 public class OutputToLoggerReader {
   public String getReadOut(String a_cmd) throws IOException, InterruptedException {
-    Runtime rt = Runtime.getRuntime();
-
-    Process p;
-    p = rt.exec(a_cmd);
+    ProcessBuilder pb = new ProcessBuilder(a_cmd);
+    Process p = pb.start();
 
     BufferedReader processOutput = new BufferedReader(new InputStreamReader(p.getInputStream()), 500000);
     BufferedReader errorOutput = new BufferedReader(new InputStreamReader(p.getErrorStream()), 500000);
