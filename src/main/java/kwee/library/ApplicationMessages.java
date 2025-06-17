@@ -32,9 +32,9 @@ public class ApplicationMessages {
   private ApplicationMessages() {
     // java.util.MissingResourceException
     try {
-    m_locale = Locale.getDefault();
-    m_bundle = ResourceBundle.getBundle(m_baseName, m_locale);
-    availableLanguages();
+      m_locale = Locale.getDefault();
+      m_bundle = ResourceBundle.getBundle(m_baseName, m_locale);
+      availableLanguages();
     } catch (Exception e) {
       m_locale = Locale.getDefault();
       m_bundle = ResourceBundle.getBundle(m_baseNameBck, m_locale);
@@ -81,8 +81,8 @@ public class ApplicationMessages {
 
   public String getMessage(String a_MsgId) {
     try {
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    return messageTemplate;
+      String messageTemplate = m_bundle.getString(a_MsgId);
+      return messageTemplate;
     } catch (Exception e) {
       LOGGER.log(Level.INFO,
           " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
@@ -130,9 +130,9 @@ public class ApplicationMessages {
   public String getMessage(String a_MsgId, String a_arg1, String a_arg2) {
     // Retrieve the message from the bundle
     try {
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
-    return formattedMessage;
+      String messageTemplate = m_bundle.getString(a_MsgId);
+      String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
+      return formattedMessage;
     } catch (Exception e) {
       LOGGER.log(Level.INFO,
           " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
