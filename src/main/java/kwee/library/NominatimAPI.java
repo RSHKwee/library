@@ -19,9 +19,13 @@ package kwee.library;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -31,15 +35,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Java library for reverse geocoding using Nominatim
+ * Initial version: Java library for reverse geocoding using Nominatim
  * 
  * @author Daniel Braun
  * @version 0.2
+ * 
+ *          Updates and folow ups:
+ * @author René Kwee
+ * @version 0.3
  *
  */
 public class NominatimAPI {
   private static final Logger LOGGER = MyLogger.getLogger();
   private final String NominatimInstance = "https://nominatim.openstreetmap.org";
+//  private static final String NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 
   /**
    * @formatter:off
@@ -82,9 +91,17 @@ public class NominatimAPI {
    */
   private int zoomLevel = 18;
 
+  /**
+   * Default constructor
+   */
   public NominatimAPI() {
   }
 
+  /**
+   * Constructor with Zoomlevel setting
+   * 
+   * @param zoomLevel
+   */
   public NominatimAPI(int zoomLevel) {
     if (zoomLevel < 0 || zoomLevel > 18) {
       LOGGER.log(Level.WARNING, "invalid zoom level (" + zoomLevel + "), using default value, set to 18");
@@ -95,6 +112,13 @@ public class NominatimAPI {
 
 // https://nominatim.openstreetmap.org
 //    /reverse.php?lat=52.12511345414349&lon=5.348694341046372&zoom=18&format=jsonv2
+  /**
+   * Translate Latitude and Longitude to an Address.
+   * 
+   * @param lat Latitude
+   * @param lon Longitude
+   * @return Address
+   */
   public Address getAdress(double lat, double lon) {
     Address result = null;
     String urlString = NominatimInstance + "/reverse.php?lat=" + String.valueOf(lat) + "&lon=" + String.valueOf(lon)
@@ -107,8 +131,43 @@ public class NominatimAPI {
     return result;
   }
 
+  /**
+   * 
+   * 
+   * @param address For example: "Laan van Meerdervoort 645, Den Haag"
+   * @return
+   * @throws Exception
+   */
+  public Address geocode(String address) throws Exception {
+    Address result = null;
+    // Build query parameters
+    String query = String.format("?format=json&q=%s&addressdetails=1&limit=1",
+        URLEncoder.encode(address, StandardCharsets.UTF_8));
+    String urlString = NominatimInstance + "/search" + query + "&format=jsonv2";
+
+    try {
+      String json = getJSON(urlString);
+      if (json.contains("[")) {
+        String[] l_json = json.split("\\[");
+        json = l_json[1] + "[" + l_json[2];
+        json = json.substring(0, (json.length() - 1));
+      }
+      result = new Address(json, zoomLevel);
+    } catch (IOException | URISyntaxException e) {
+      LOGGER.log(Level.WARNING, "Can't connect to server.\n" + e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * Get JSON information from Nominatim site.
+   * 
+   * @param urlString URL with request
+   * @return Result
+   * @throws IOException
+   * @throws URISyntaxException
+   */
   private String getJSON(String urlString) throws IOException, URISyntaxException {
-    // URL url = new URL(urlString);
     URL url = new URI(urlString).toURL();
     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
@@ -125,4 +184,5 @@ public class NominatimAPI {
     LOGGER.log(Level.FINEST, result.toString());
     return result.toString();
   }
+
 }

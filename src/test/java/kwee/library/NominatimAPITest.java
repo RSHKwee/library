@@ -43,6 +43,27 @@ public class NominatimAPITest extends TestCase {
     assertTrue(bstat);
   }
 
+  public void testNominatimAPIGetLongLat() {
+    NominatimAPI l_api = new NominatimAPI(10);
+    assertNotNull(l_api);
+
+    Address l_address = new Address();
+    String adrstr = "Laan van Meerdervoort 645, Den Haag";
+    try {
+      l_address = l_api.geocode(adrstr);
+
+      double lat = l_address.getLatitude();
+      double longitud = l_address.getLongitude();
+
+      assertTrue(areEqual(lat, 52.0731375, 1e-9));
+      assertTrue(areEqual(longitud, 4.2607386, 1e-9));
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+  }
+
   public void testGetAdress() {
     Address l_address = new Address(
         "{\"place_id\":143681749,\"licence\":\"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright\",\"osm_type\":\"way\",\"osm_id\":151930472,\"lat\":\"52.12511345414349\",\"lon\":\"5.348694341046372\",\"display_name\":\"A28, Leusden, Utrecht, Nederland, 3818 ET, Nederland\",\"address\":{\"road\":\"A28\",\"city_district\":\"Leusden\",\"town\":\"Leusden\",\"state\":\"Utrecht\",\"ISO3166-2-lvl4\":\"NL-UT\",\"country\":\"Nederland\",\"postcode\":\"3818 ET\",\"country_code\":\"nl\"},\"boundingbox\":[\"52.1221343\",\"52.1266872\",\"5.3383451\",\"5.3567048\"]}",
@@ -52,5 +73,15 @@ public class NominatimAPITest extends TestCase {
     double lon = 5.348694341046372;
     Address l_address_2 = m_Api.getAdress(lat, lon);
     assertTrue(l_address_2.equals(l_address));
+  }
+
+  public static boolean areEqual(double a, double b, double epsilon) {
+    if (Double.isNaN(a) || Double.isNaN(b)) {
+      return false; // NaN is nooit gelijk aan iets
+    }
+    if (Double.isInfinite(a) || Double.isInfinite(b)) {
+      return a == b; // Infinity vergelijken met ==
+    }
+    return Math.abs(a - b) <= epsilon * Math.max(Math.abs(a), Math.abs(b));
   }
 }

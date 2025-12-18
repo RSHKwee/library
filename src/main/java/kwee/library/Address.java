@@ -11,7 +11,7 @@ import kwee.logger.MyLogger;
 public class Address {
   private static final Logger LOGGER = MyLogger.getLogger();
 
-  private int lod = -1;
+  private int zoomlevel = -1;
   private long osm_id = -1;
   private String osm_type = "";
   private String country_code = "";
@@ -24,15 +24,26 @@ public class Address {
   private String road = "";
   private String display_name = "";
 
+  private Double longitude = 0.0;
+  private Double latitude = 0.0;
+
+  /**
+   * Default constructor for Tests.
+   */
   Address() {
   }
 
-  public Address(String json, int lod) {
+  /**
+   * 
+   * @param json
+   * @param zoomlevel
+   */
+  public Address(String json, int zoomlevel) {
     try {
       JSONObject jObject = new JSONObject(json);
 
       LOGGER.log(Level.FINEST, "json:'" + json + "'");
-      LOGGER.log(Level.FINEST, "lod:" + lod);
+      LOGGER.log(Level.FINEST, "zoomlevel:" + zoomlevel);
       if (jObject.has("error")) {
         LOGGER.log(Level.INFO, jObject.get("error").toString());
         return;
@@ -41,6 +52,13 @@ public class Address {
       osm_id = jObject.getLong("osm_id");
       osm_type = jObject.getString("osm_type");
       display_name = jObject.getString("display_name");
+
+      try {
+        latitude = Double.parseDouble(jObject.getString("lat"));
+        longitude = Double.parseDouble(jObject.getString("lon"));
+      } catch (Exception e) {
+        // Do nothing
+      }
 
       JSONObject addressObject = jObject.getJSONObject("address");
       if (addressObject.has("country_code")) {
@@ -68,10 +86,18 @@ public class Address {
         road = addressObject.getString("road");
       }
 
-      this.lod = lod;
+      this.zoomlevel = zoomlevel;
     } catch (JSONException e) {
       LOGGER.log(Level.WARNING, "Can't parse JSON string: " + e.getMessage());
     }
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public Double getLatitude() {
+    return latitude;
   }
 
   public long getOsmId() {
@@ -82,8 +108,8 @@ public class Address {
     return ReplSemiColon(osm_type);
   }
 
-  public int getLod() {
-    return lod;
+  public int getZoomlevel() {
+    return zoomlevel;
   }
 
   public String getCountryCode() {
@@ -129,7 +155,7 @@ public class Address {
 
   public boolean equals(Address a_adress) {
     boolean bstat = true;
-    if (a_adress.getLod() != lod) {
+    if (a_adress.getZoomlevel() != zoomlevel) {
       bstat = false;
     } else if (a_adress.getOsmId() != osm_id) {
       bstat = false;

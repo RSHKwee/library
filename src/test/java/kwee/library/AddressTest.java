@@ -35,7 +35,7 @@ public class AddressTest extends TestCase {
   }
 
   public void testGetLod() {
-    assertEquals(m_address.getLod(), 18);
+    assertEquals(m_address.getZoomlevel(), 18);
   }
 
   public void testGetCountryCode() {
@@ -68,6 +68,14 @@ public class AddressTest extends TestCase {
 
   public void testGetRoad() {
     assertEquals(m_address.getRoad(), "A28");
+  }
+
+  public void testGetLongitude() {
+    assertEquals(m_address.getLongitude(), 5.348694341046372);
+  }
+
+  public void testGetLatitude() {
+    assertEquals(m_address.getLatitude(), 52.12511345414349);
   }
 
   public void testGetDisplayName() {
