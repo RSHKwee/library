@@ -147,16 +147,23 @@ public class NominatimAPI {
 
     try {
       String json = getJSON(urlString);
-      if (json.contains("[")) {
-        String[] l_json = json.split("\\[");
-        json = l_json[1] + "[" + l_json[2];
-        json = json.substring(0, (json.length() - 1));
-      }
-      result = new Address(json, zoomLevel);
+      result = new Address(json, 18);
     } catch (IOException | URISyntaxException e) {
       LOGGER.log(Level.WARNING, "Can't connect to server.\n" + e.getMessage());
     }
     return result;
+  }
+
+  /**
+   * 
+   * @param address
+   * @return
+   * @throws Exception
+   */
+  public Address geocode(Address address) throws Exception {
+    String addrStr = address.getRoad() + " " + address.getHouseNumber() + ", " + address.getCity() + ", "
+        + address.getCountry();
+    return geocode(addrStr);
   }
 
   /**
@@ -182,6 +189,13 @@ public class NominatimAPI {
 
     in.close();
     LOGGER.log(Level.FINEST, result.toString());
+
+    // Rate limiting voor Nominatim
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
     return result.toString();
   }
 

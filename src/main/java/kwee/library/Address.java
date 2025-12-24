@@ -14,6 +14,7 @@ public class Address {
   private int zoomlevel = -1;
   private long osm_id = -1;
   private String osm_type = "";
+  private String obj_type = "";
   private String country_code = "";
   private String country = "";
   private String postcode = "";
@@ -22,23 +23,59 @@ public class Address {
   private String city = "";
   private String suburb = "";
   private String road = "";
+  private String house_number = "";
   private String display_name = "";
 
   private Double longitude = 0.0;
   private Double latitude = 0.0;
 
   /**
-   * Default constructor for Tests.
+   * Default constructor.
    */
-  Address() {
+  public Address() {
   }
 
   /**
+   * @formatter:off
+   * [{
+   *   "place_id":145104473,
+   *   "licence":"Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+   *   "osm_type":"node",
+   *   "osm_id":2731774508,
+   *   "lat":"52.0731375",
+   *   "lon":"4.2607386",
+   *   "class":"place",
+   *   "type":"house",
+   *   "place_rank":30,
+   *   "importance":7.773327229720023e-05,
+   *   "addresstype":"place",
+   *   "name":"",
+   *   "display_name":"645, Laan van Meerdervoort, Bloemenbuurt, Segbroek, Den Haag, Zuid-Holland, Nederland, 2564 AB, Nederland",
+   *   "address":{
+   *     "house_number":"645",
+   *     "road":"Laan van Meerdervoort",
+   *     "neighbourhood":"Bloemenbuurt",
+   *     "suburb":"Segbroek",
+   *     "city":"Den Haag",
+   *     "municipality":"Den Haag",
+   *     "state":"Zuid-Holland",
+   *     "ISO3166-2-lvl4":"NL-ZH",
+   *     "country":"Nederland",
+   *     "postcode":"2564 AB",
+   *     "country_code":"nl"
+   *   },
+   *   "boundingbox":["52.0730875","52.0731875","4.2606886","4.2607886"]
+   * }]
+   * 
+   * @formatter:on
    * 
    * @param json
    * @param zoomlevel
    */
   public Address(String json, int zoomlevel) {
+    if (json.startsWith("[")) {
+      json = json.substring(1, (json.length() - 1));
+    }
     try {
       JSONObject jObject = new JSONObject(json);
 
@@ -52,6 +89,11 @@ public class Address {
       osm_id = jObject.getLong("osm_id");
       osm_type = jObject.getString("osm_type");
       display_name = jObject.getString("display_name");
+      try {
+        obj_type = jObject.getString("type");
+      } catch (JSONException e) {
+        obj_type = "";
+      }
 
       try {
         latitude = Double.parseDouble(jObject.getString("lat"));
@@ -78,12 +120,17 @@ public class Address {
       }
       if (addressObject.has("city")) {
         city = addressObject.getString("city");
+      } else if (addressObject.has("town")) {
+        city = addressObject.getString("town");
       }
       if (addressObject.has("suburb")) {
         suburb = addressObject.getString("suburb");
       }
       if (addressObject.has("road")) {
         road = addressObject.getString("road");
+      }
+      if (addressObject.has("house_number")) {
+        house_number = addressObject.getString("house_number");
       }
 
       this.zoomlevel = zoomlevel;
@@ -92,6 +139,7 @@ public class Address {
     }
   }
 
+  // Getters =================================
   public Double getLongitude() {
     return longitude;
   }
@@ -106,6 +154,10 @@ public class Address {
 
   public String getOsmType() {
     return ReplSemiColon(osm_type);
+  }
+
+  public String getObjType() {
+    return obj_type;
   }
 
   public int getZoomlevel() {
@@ -144,8 +196,77 @@ public class Address {
     return ReplSemiColon(road);
   }
 
+  public String getHouseNumber() {
+    return ReplSemiColon(house_number);
+  }
+
   public String getDisplayName() {
     return ReplSemiColon(display_name);
+  }
+
+  // Setters ==========================
+  public void setZoomlevel(int zoomlevel) {
+    this.zoomlevel = zoomlevel;
+  }
+
+  public void setOsmId(long osm_id) {
+    this.osm_id = osm_id;
+  }
+
+  public void setOsmType(String osm_type) {
+    this.osm_type = osm_type;
+  }
+
+  public void setObjType(String obj_type) {
+    this.obj_type = obj_type;
+  }
+
+  public void setCountry_code(String country_code) {
+    this.country_code = country_code;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public void setPostcode(String postcode) {
+    this.postcode = postcode;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public void setCounty(String county) {
+    this.county = county;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public void setSuburb(String suburb) {
+    this.suburb = suburb;
+  }
+
+  public void setRoad(String road) {
+    this.road = road;
+  }
+
+  public void setHouseNumber(String house_number) {
+    this.house_number = house_number;
+  }
+
+  public void setDisplayName(String display_name) {
+    this.display_name = display_name;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
+
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
   }
 
   @Override
@@ -177,16 +298,23 @@ public class Address {
       bstat = false;
     } else if (!road.equalsIgnoreCase(a_adress.getRoad())) {
       bstat = false;
+    } else if (!house_number.equalsIgnoreCase(a_adress.getHouseNumber())) {
+      bstat = false;
     } else if (!display_name.equalsIgnoreCase(a_adress.getDisplayName())) {
       bstat = false;
     }
     return bstat;
   }
 
+  // Local ==============================
+  /**
+   * 
+   * @param a_Str
+   * @return
+   */
   String ReplSemiColon(String a_Str) {
     String l_str = a_Str;
     l_str = l_str.replace(";", ",");
     return l_str;
   }
-
 }

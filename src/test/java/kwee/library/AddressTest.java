@@ -34,6 +34,10 @@ public class AddressTest extends TestCase {
     assertEquals(m_address.getOsmType(), "way");
   }
 
+  public void testGetObjType() {
+    assertEquals(m_address.getObjType(), "");
+  }
+
   public void testGetLod() {
     assertEquals(m_address.getZoomlevel(), 18);
   }
@@ -59,7 +63,7 @@ public class AddressTest extends TestCase {
   }
 
   public void testGetCity() {
-    assertEquals(m_address.getCity(), "");
+    assertEquals(m_address.getCity(), "Leusden");
   }
 
   public void testGetSuburb() {
