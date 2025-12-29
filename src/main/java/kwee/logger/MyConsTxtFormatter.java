@@ -5,7 +5,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 
 // this custom formatter formats parts of a log record to a single line
-class MyConsTxtFormatter extends SimpleFormatter {
+public class MyConsTxtFormatter extends SimpleFormatter {
   private String lineSeparator = "\r\n";
 
   // this method is called for every log records
