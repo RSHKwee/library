@@ -120,10 +120,24 @@ public class ApplicationMessages {
     return formattedMessage;
   }
 
+  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, String a_arg3) {
+    // Retrieve the message from the bundle
+    String messageTemplate = m_bundle.getString(a_MsgId);
+    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
+    return formattedMessage;
+  }
+
   public String getMessage(String a_MsgId, int a_arg1, int a_arg2, int a_arg3) {
     // Retrieve the message from the bundle
     String messageTemplate = m_bundle.getString(a_MsgId);
     String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
+    return formattedMessage;
+  }
+
+  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, int a_arg3, String a_arg4) {
+    // Retrieve the message from the bundle
+    String messageTemplate = m_bundle.getString(a_MsgId);
+    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3, a_arg4);
     return formattedMessage;
   }
 
