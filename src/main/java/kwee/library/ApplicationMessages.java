@@ -79,21 +79,25 @@ public class ApplicationMessages {
     return LanguageName;
   }
 
-  public String getMessage(String a_MsgId) {
-    try {
-      String messageTemplate = m_bundle.getString(a_MsgId);
-      return messageTemplate;
-    } catch (Exception e) {
-      LOGGER.log(Level.INFO,
-          " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
-    }
-    return "";
-  }
-
-  public String getMessage(String a_MsgId, String a_arg1) {
+  /**
+   * getMessage format the message
+   * 
+   * @param a_MsgId Message identification
+   * @param args    Arguments
+   * @return Formatted message
+   */
+  public String getMessage(String a_MsgId, Object... args) {
     // Retrieve the message from the bundle
     String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1);
+
+    // Optional validation: control number arguments
+    int expectedArgs = countPlaceholders(messageTemplate);
+    if (args.length != expectedArgs) {
+      throw new IllegalArgumentException(
+          String.format("Message %s expeted %d arguments, but provided %d", a_MsgId, expectedArgs, args.length));
+    }
+
+    String formattedMessage = MessageFormat.format(messageTemplate, args);
     return formattedMessage;
   }
 
@@ -106,66 +110,22 @@ public class ApplicationMessages {
     return formattedMessage;
   }
 
-  public String getMessage(String a_MsgId, int a_arg1) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1);
-    return formattedMessage;
-  }
+  /**
+   * Helper count the placeholders
+   * 
+   * @param template Template String
+   * @return number of placeholders
+   */
+  private int countPlaceholders(String template) {
+    // Simple implementation -count the {} placeholders
+    int count = 0;
 
-  public String getMessage(String a_MsgId, int a_arg1, int a_arg2) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
-    return formattedMessage;
-  }
-
-  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, String a_arg3) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
-    return formattedMessage;
-  }
-
-  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, int a_arg3) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
-    return formattedMessage;
-  }
-
-  public String getMessage(String a_MsgId, int a_arg1, int a_arg2, int a_arg3, String a_arg4) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3, a_arg4);
-    return formattedMessage;
-  }
-
-  public String getMessage(String a_MsgId, String a_arg1, String a_arg2) {
-    // Retrieve the message from the bundle
-    try {
-      String messageTemplate = m_bundle.getString(a_MsgId);
-      String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
-      return formattedMessage;
-    } catch (Exception e) {
-      LOGGER.log(Level.INFO,
-          " MsgId: " + a_MsgId + " | m_bundle: " + m_bundle + "| Locale: " + m_bundle.getLocale().toString());
+    for (int i = 0; i < template.length(); i++) {
+      if (template.charAt(i) == '{' && i + 1 < template.length() && Character.isDigit(template.charAt(i + 1))) {
+        count++;
+      }
     }
-    return "";
-  }
-
-  public String getMessage(String a_MsgId, String a_arg1, int a_arg2) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2);
-    return formattedMessage;
-  }
-
-  public String getMessage(String a_MsgId, String a_arg1, String a_arg2, String a_arg3) {
-    // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
-    String formattedMessage = MessageFormat.format(messageTemplate, a_arg1, a_arg2, a_arg3);
-    return formattedMessage;
+    return count;
   }
 
   public void dumpBundle() {
