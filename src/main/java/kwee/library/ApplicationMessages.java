@@ -28,7 +28,9 @@ public class ApplicationMessages {
   private ResourceBundle m_bundle;
   private Locale m_locale;
 
-  // Private constructor to prevent instantiation from other classes
+  /**
+   * Private constructor to prevent instantiation from other classes
+   */
   private ApplicationMessages() {
     // java.util.MissingResourceException
     try {
@@ -53,11 +55,19 @@ public class ApplicationMessages {
     return SingletonHelper.INSTANCE;
   }
 
-  // Other methods and fields can be added as needed
+  /**
+   * Get locale
+   * 
+   * @return Locale
+   */
   public Locale getLocale() {
     return m_locale;
   }
 
+  /**
+   * 
+   * @param languageCode
+   */
   public void changeLanguage(String languageCode) {
     if (m_availableLanguages.get(languageCode) != null) {
       Locale newLocale = Locale.of(languageCode);
@@ -66,10 +76,19 @@ public class ApplicationMessages {
     LOGGER.info("kwee.lib messages Locale: " + m_locale);
   }
 
+  /**
+   * 
+   * @return
+   */
   public Set<String> getTranslations() {
     return m_availableLanguages.keySet();
   }
 
+  /**
+   * 
+   * @param languageCode
+   * @return
+   */
   public String getLanguageName(String languageCode) {
     String LanguageName = "";
     if (m_availableLanguages.get(languageCode) != null) {
@@ -101,6 +120,13 @@ public class ApplicationMessages {
     return formattedMessage;
   }
 
+  /**
+   * getMessage format the message with a Date argument.
+   * 
+   * @param a_MsgId Message identification
+   * @param a_arg1  Date
+   * @return Formatted message
+   */
   public String getMessage(String a_MsgId, LocalDate a_arg1) {
     // Retrieve the message from the bundle
     String messageTemplate = m_bundle.getString(a_MsgId);
@@ -128,6 +154,9 @@ public class ApplicationMessages {
     return count;
   }
 
+  /**
+   * Dump defined key and messages
+   */
   public void dumpBundle() {
     Enumeration<String> keys = m_bundle.getKeys();
     Collections.list(keys).stream().forEach(key -> {
@@ -137,12 +166,20 @@ public class ApplicationMessages {
   }
 
   // Privates
+  /**
+   * Set locale
+   * 
+   * @param locale
+   */
   private void setLocale(Locale locale) {
     m_bundle = ResourceBundle.getBundle(m_baseName, locale);
     m_locale = locale;
     Locale.setDefault(locale);
   }
 
+  /**
+   * Build list with available languages.
+   */
   private void availableLanguages() {
     // Get an array of available locales
     Locale[] availableLocales = Locale.getAvailableLocales();
