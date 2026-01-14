@@ -2,9 +2,19 @@ package kwee.library;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import kwee.logger.MyLogger;
 
@@ -17,7 +27,8 @@ public class FileUtils {
   }
 
   /**
-   * Controleer of een directory bestaat, indien niet bestaand dan creeer de directory.
+   * Controleer of een directory bestaat, indien niet bestaand dan creeer de
+   * directory.
    * 
    * @param a_dir Directory pad
    */
@@ -88,8 +99,9 @@ public class FileUtils {
   }
 
   /**
-   * The static method that actually performs the file copy. Before copying the file, however, it performs a lot of
-   * tests to make sure everything is as it should be.
+   * The static method that actually performs the file copy. Before copying the
+   * file, however, it performs a lot of tests to make sure everything is as it
+   * should be.
    */
   static void copy(String from_name, String to_name) throws IOException {
     File from_file = new File(from_name); // Get File objects from Strings
@@ -297,4 +309,130 @@ public class FileUtils {
     }
     return str1.substring(index) + str2.substring(index);
   }
+
+  // Basis methode om alle File objecten te krijgen
+  public static List<File> getAllFiles(String directoryPath) throws IOException {
+    return getAllFiles(directoryPath, Integer.MAX_VALUE, EnumSet.noneOf(FileVisitOption.class));
+  }
+
+  // Met maximale diepte
+  public static List<File> getAllFiles(String directoryPath, int maxDepth) throws IOException {
+    return getAllFiles(directoryPath, maxDepth, EnumSet.noneOf(FileVisitOption.class));
+  }
+
+  // Volledige controle
+  public static List<File> getAllFiles(String directoryPath, int maxDepth, Set<FileVisitOption> options)
+      throws IOException {
+    try (var walk = Files.walk(Paths.get(directoryPath), maxDepth, options.toArray(new FileVisitOption[0]))) {
+      return walk.filter(Files::isRegularFile).map(Path::toFile).collect(Collectors.toList());
+    }
+  }
+
+  // File objecten gesorteerd op naam
+  public static List<File> getAllFilesSortedByName(String directoryPath) throws IOException {
+    try (var walk = Files.walk(Paths.get(directoryPath))) {
+      return walk.filter(Files::isRegularFile).map(Path::toFile).sorted(Comparator.comparing(File::getName))
+          .collect(Collectors.toList());
+    }
+  }
+
+  // File objecten gesorteerd op grootte
+  public static List<File> getAllFilesSortedBySize(String directoryPath) throws IOException {
+    try (var walk = Files.walk(Paths.get(directoryPath))) {
+      return walk.filter(Files::isRegularFile).map(Path::toFile).sorted(Comparator.comparingLong(File::length))
+          .collect(Collectors.toList());
+    }
+  }
+
+  // Alleen leesbare bestanden
+  public static List<File> getReadableFiles(String directoryPath) throws IOException {
+    try (var walk = Files.walk(Paths.get(directoryPath))) {
+      return walk.filter(Files::isRegularFile).map(Path::toFile).filter(File::canRead).collect(Collectors.toList());
+    }
+  }
+
+  /**
+   * Bepaal directe subdirectory van een bestand ten opzichte van root
+   */
+  public static String getImmediateSubdirectory(File file, File root) {
+    Path relative = getRelativePath(file, root);
+
+    if (relative != null && relative.getNameCount() > 1) {
+      return relative.getName(0).toString();
+    }
+
+    return null;
+  }
+
+  /**
+   * Bepaal alle parent directories tussen root en bestand
+   */
+  public static List<String> getAllSubdirectories(File file, File root) {
+    List<String> directories = new ArrayList<>();
+    Path relative = getRelativePath(file, root);
+
+    if (relative != null && relative.getNameCount() > 1) {
+      for (int i = 0; i < relative.getNameCount() - 1; i++) {
+        directories.add(relative.getName(i).toString());
+      }
+    }
+
+    return directories;
+  }
+
+  public static String getSubdirectory(File file, File root) {
+    List<String> directories = getAllSubdirectories(file, root);
+    String subdir = "";
+    if (!directories.isEmpty()) {
+      subdir = directories.getLast();
+    }
+    return subdir;
+  }
+
+  /**
+   * Bepaal het volledige subdirectory pad (bv. "subdir1/subdir2/subdir3")
+   */
+  public static String getFullSubdirectoryPath(File file, File root) {
+    Path relative = getRelativePath(file, root);
+
+    if (relative != null && relative.getNameCount() > 1) {
+      // Verwijder de bestandsnaam (laatste component)
+      Path parentPath = relative.getParent();
+      return parentPath != null ? parentPath.toString() : "";
+    }
+
+    return "";
+  }
+
+  /**
+   * Bepaal hoe diep een bestand in de directory structuur zit
+   */
+  public static int getDirectoryDepth(File file, File root) {
+    Path relative = getRelativePath(file, root);
+
+    if (relative != null) {
+      return Math.max(0, relative.getNameCount() - 1);
+    }
+
+    return 0;
+  }
+
+  /**
+   * Helper: Bepaal relatief pad tussen bestand en root
+   */
+  private static Path getRelativePath(File file, File root) {
+    try {
+      Path filePath = file.toPath().toAbsolutePath().normalize();
+      Path rootPath = root.toPath().toAbsolutePath().normalize();
+
+      if (filePath.startsWith(rootPath)) {
+        return rootPath.relativize(filePath);
+      }
+    } catch (Exception e) {
+      // Log error indien nodig
+    }
+
+    return null;
+  }
+
 }

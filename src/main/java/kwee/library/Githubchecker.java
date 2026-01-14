@@ -19,6 +19,15 @@ import kwee.logger.MyLogger;
 
 public class Githubchecker {
   private static final Logger LOGGER = MyLogger.getLogger();
+  private String m_Owner = "";
+  private String m_RepoName = "";
+  private String m_LatestTag = "";
+
+  public Githubchecker(String owner, String repoName) {
+    m_Owner = owner;
+    m_RepoName = repoName;
+    m_LatestTag = getReleases(owner, repoName);
+  }
 
   public static String getReleases(String owner, String repoName) {
     String latestTag = "";
@@ -62,6 +71,10 @@ public class Githubchecker {
       LOGGER.log(Level.WARNING, e.getMessage());
     }
     return latestTag;
+  }
+
+  public boolean isUpdateAvailable(String currentVersion) {
+    return isUpdateAvailable(currentVersion, m_LatestTag);
   }
 
   /**

@@ -16,7 +16,7 @@ import java.util.Date;
  *
  */
 public class JarInfo {
-  static final String c_CopyrightYear = "2025"; // Fallback
+  static final String c_CopyrightYear = "2026"; // Fallback
 
   /**
    * Converteer time naar een leesbare tekst.
