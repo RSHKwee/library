@@ -120,7 +120,7 @@ public class NominatimAPI {
    * @return Address
    */
   public Address getAdress(double lat, double lon) {
-    Address result = null;
+    Address result = new Address();
     String urlString = NominatimInstance + "/reverse.php?lat=" + String.valueOf(lat) + "&lon=" + String.valueOf(lon)
         + "&zoom=" + zoomLevel + "&format=jsonv2";
     try {
