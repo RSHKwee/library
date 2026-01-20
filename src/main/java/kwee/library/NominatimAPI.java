@@ -139,7 +139,7 @@ public class NominatimAPI {
    * @throws Exception
    */
   public Address geocode(String address) throws Exception {
-    Address result = null;
+    Address result = new Address();
     // Build query parameters
     String query = String.format("?format=json&q=%s&addressdetails=1&limit=1",
         URLEncoder.encode(address, StandardCharsets.UTF_8));
