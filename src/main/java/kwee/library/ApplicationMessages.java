@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ public class ApplicationMessages {
 
   private String m_baseName = "translations/app_messages";
   private String m_baseNameBck = "translations/messages";
+  private String m_baseNameAct = m_baseName;
 
   private Map<String, Locale> m_availableLanguages = new HashMap<String, Locale>();
 
@@ -35,12 +37,12 @@ public class ApplicationMessages {
     // java.util.MissingResourceException
     try {
       m_locale = Locale.getDefault();
-      m_bundle = ResourceBundle.getBundle(m_baseName, m_locale);
+      m_bundle = ResourceBundle.getBundle(m_baseNameAct, m_locale);
       availableLanguages();
     } catch (Exception e) {
       m_locale = Locale.getDefault();
       m_bundle = ResourceBundle.getBundle(m_baseNameBck, m_locale);
-      m_baseName = m_baseNameBck;
+      m_baseNameAct = m_baseNameBck;
     }
     LOGGER.info("kwee.lib messages Locale: " + m_locale);
   }
@@ -107,7 +109,7 @@ public class ApplicationMessages {
    */
   public String getMessage(String a_MsgId, Object... args) {
     // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
+    String messageTemplate = getMessageTemplate(a_MsgId);
 
     // Optional validation: control number arguments
     int expectedArgs = countPlaceholders(messageTemplate);
@@ -129,7 +131,7 @@ public class ApplicationMessages {
    */
   public String getMessage(String a_MsgId, LocalDate a_arg1) {
     // Retrieve the message from the bundle
-    String messageTemplate = m_bundle.getString(a_MsgId);
+    String messageTemplate = getMessageTemplate(a_MsgId);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM YYYY", m_locale);
     String formattedDate = a_arg1.format(formatter);
     String formattedMessage = MessageFormat.format(messageTemplate, formattedDate);
@@ -154,6 +156,18 @@ public class ApplicationMessages {
     return count;
   }
 
+  private String getMessageTemplate(String a_MsgId) {
+    String messageTemplate = "";
+    try {
+      messageTemplate = m_bundle.getString(a_MsgId);
+    } catch (MissingResourceException e) {
+      m_baseNameAct = m_baseNameBck;
+      m_bundle = ResourceBundle.getBundle(m_baseNameAct, m_locale);
+
+    }
+    return messageTemplate;
+  }
+
   /**
    * Dump defined key and messages
    */
@@ -172,7 +186,7 @@ public class ApplicationMessages {
    * @param locale
    */
   private void setLocale(Locale locale) {
-    m_bundle = ResourceBundle.getBundle(m_baseName, locale);
+    m_bundle = ResourceBundle.getBundle(m_baseNameAct, locale);
     m_locale = locale;
     Locale.setDefault(locale);
   }
@@ -186,7 +200,7 @@ public class ApplicationMessages {
 
     // Iterate through available locales and check for resource bundles
     for (Locale locale : availableLocales) {
-      ResourceBundle bundle = ResourceBundle.getBundle(m_baseName, locale);
+      ResourceBundle bundle = ResourceBundle.getBundle(m_baseNameAct, locale);
       if (bundle.getLocale().equals(locale)) {
         m_availableLanguages.put(locale.getLanguage(), locale);
       }

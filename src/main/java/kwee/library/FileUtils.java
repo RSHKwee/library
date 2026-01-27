@@ -1,11 +1,21 @@
 package kwee.library;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.net.URL;
+
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -400,8 +410,25 @@ public class FileUtils {
       Path parentPath = relative.getParent();
       return parentPath != null ? parentPath.toString() : "";
     }
-
     return "";
+  }
+
+  /**
+   * Backup a file to .bak
+   * 
+   * @param filePath
+   * @throws IOException
+   */
+  public static void backupFile(String filePath) throws IOException {
+    Path original = Paths.get(filePath);
+    Path backup = Paths.get(filePath + ".bak");
+
+    // Check if file exists
+    if (Files.exists(original)) {
+      // Copy to backup
+      Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+      LOGGER.log(Level.FINE, "Backup gemaakt: " + backup);
+    }
   }
 
   /**
@@ -413,7 +440,6 @@ public class FileUtils {
     if (relative != null) {
       return Math.max(0, relative.getNameCount() - 1);
     }
-
     return 0;
   }
 
@@ -431,8 +457,6 @@ public class FileUtils {
     } catch (Exception e) {
       // Log error indien nodig
     }
-
     return null;
   }
-
 }
