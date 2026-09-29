@@ -7,15 +7,12 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URL;
-
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -118,17 +115,21 @@ public class FileUtils {
     File to_file = new File(to_name);
 
     // First make sure the source file exists, is a file, and is readable.
-    if (!from_file.exists())
+    if (!from_file.exists()) {
       abort("FileCopy: no such source file: " + from_name);
-    if (!from_file.isFile())
+    }
+    if (!from_file.isFile()) {
       abort("FileCopy: can't copy directory: " + from_name);
-    if (!from_file.canRead())
+    }
+    if (!from_file.canRead()) {
       abort("FileCopy: source file is unreadable: " + from_name);
+    }
 
     // If the destination is a directory, use the source file name
     // as the destination file name
-    if (to_file.isDirectory())
+    if (to_file.isDirectory()) {
       to_file = new File(to_file, from_file.getName());
+    }
 
     // If we've gotten this far, then everything is okay.
     // So we copy the file, a buffer of bytes at a time.
@@ -143,23 +144,26 @@ public class FileUtils {
       // looping until we reach the end of the file (when read() returns -1).
       // Note the combination of assignment and comparison in this while
       // loop. This is a common I/O programming idiom.
-      while ((bytes_read = from.read(buffer)) != -1) // Read bytes until EOF
+      while ((bytes_read = from.read(buffer)) != -1) { // Read bytes until EOF
         to.write(buffer, 0, bytes_read); // write bytes
+      }
     }
     // Always close the streams, even if exceptions were thrown
     finally {
-      if (from != null)
+      if (from != null) {
         try {
           from.close();
         } catch (IOException e) {
           ;
         }
-      if (to != null)
+      }
+      if (to != null) {
         try {
           to.close();
         } catch (IOException e) {
           ;
         }
+      }
     }
   }
 
@@ -199,6 +203,11 @@ public class FileUtils {
     return l_filename;
   }
 
+  /**
+   * 
+   * @param a_file
+   * @return
+   */
   public static File GetResourceFile(String a_file) {
     File l_File = null;
     URL resourceUrl;
