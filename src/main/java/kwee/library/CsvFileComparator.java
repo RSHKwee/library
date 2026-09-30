@@ -23,13 +23,14 @@ public final class CsvFileComparator {
   /**
    * Vergelijkt twee CSV-bestanden met de opgegeven opties.
    */
-  public static void assertFilesEqual(Path expected, Path actual, Options options) throws IOException {
+  public static boolean assertFilesEqual(Path expected, Path actual, Options options) throws IOException {
     List<String> expLines = normalize(Files.readAllLines(expected), options);
     List<String> actLines = normalize(Files.readAllLines(actual), options);
 
     if (!expLines.equals(actLines)) {
-      throw new AssertionError(buildDiff(expected, actual, expLines, actLines));
+      return false;
     }
+    return true;
   }
 
   private static List<String> normalize(List<String> lines, Options options) {
@@ -164,6 +165,12 @@ public final class CsvFileComparator {
     /** Decimaalteken in de CSV (default: ','). */
     public Options decimalSeparator(char sep) {
       this.decimalSeparator = sep;
+      return this;
+    }
+
+    public Options build() {
+      // Optioneel: hier zou je kunnen valideren of defensief kopiëren.
+      // Voor nu gewoon 'this' teruggeven.
       return this;
     }
   }

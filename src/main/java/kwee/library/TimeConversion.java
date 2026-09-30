@@ -119,7 +119,7 @@ public class TimeConversion {
     String[] parts = timeZone.getID().split("/");
     if (parts.length >= 2) {
       // return new Locale.Builder().setRegion(parts[0]).setVariant(parts[1]).build();
-      return new Locale("", parts[0], parts[1]);
+      return Locale.of("", parts[0], parts[1]);
     }
     return Locale.getDefault();
   }

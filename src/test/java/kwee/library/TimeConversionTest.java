@@ -7,7 +7,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Optional;
-import java.util.TimeZone;
 
 import junit.framework.TestCase;
 
@@ -51,8 +50,6 @@ public class TimeConversionTest extends TestCase {
   }
 
   public void testgetTimeZone() {
-    TimeZone zone = TimeConversion.getTimeZone("Europe/Amsterdam");
-
     double excelDate = 44887.0;
     Date dt = TimeConversion.convertExcelDate(excelDate);
     String str = dt.toString();
