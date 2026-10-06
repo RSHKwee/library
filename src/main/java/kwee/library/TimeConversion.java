@@ -93,15 +93,10 @@ public class TimeConversion {
    * @return TimeZone for given country
    */
   public static TimeZone getTimeZone(String countryCode) {
-    // Get all available time zone IDs
-    String[] availableIDs = TimeZone.getAvailableIDs();
-    LOGGER.log(Level.INFO, " getTimeZone/countryCode : " + countryCode);
-    // Iterate through time zones and find one associated with the country
-    for (String timeZoneID : availableIDs) {
-      TimeZone timeZone = TimeZone.getTimeZone(timeZoneID);
+    for (String zoneId : ZoneId.getAvailableZoneIds()) {
+      ZoneId zone = ZoneId.of(zoneId);
+      TimeZone timeZone = TimeZone.getTimeZone(zone);
       Locale timeZoneLocale = timeZoneToLocale(timeZone);
-
-      // Check if the country code matches
       if (timeZoneLocale.getCountry().equals(countryCode)) {
         return timeZone;
       }
