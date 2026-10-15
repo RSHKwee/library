@@ -42,7 +42,7 @@ public class JarInfo {
       JarURLConnection j = (JarURLConnection) ClassLoader.getSystemResource(rn).openConnection();
       return j.getJarFile().getEntry("META-INF/MANIFEST.MF").getTime();
     } catch (Exception e) {
-      return null;
+      return 0L;
     }
   }
 
@@ -73,7 +73,7 @@ public class JarInfo {
    */
   public static String getTimeStr(Class<?> cl) {
     String v_time = "-";
-    if (getTime(cl) != null) {
+    if (getTime(cl) != 0L) {
       v_time = convertTime(getTime(cl));
     } else {
       LocalDate today = LocalDate.now();
@@ -90,14 +90,18 @@ public class JarInfo {
    * @return
    * @throws FileNotFoundException
    */
-  public static String getJarFilenaam(Class<?> cl) throws FileNotFoundException {
-    String path = cl.getResource(cl.getSimpleName() + ".class").getFile();
-    if (path.startsWith("/")) {
-      throw new FileNotFoundException("This is not a jar file: \n" + path);
-    }
-    path = ClassLoader.getSystemClassLoader().getResource(path).getFile();
+  public static String getJarFilenaam(Class<?> cl) throws Exception {
+    try {
+      String path = cl.getResource(cl.getSimpleName() + ".class").getFile();
+      if (path.startsWith("/")) {
+        throw new FileNotFoundException("This is not a jar file: \n" + path);
+      }
+      path = ClassLoader.getSystemClassLoader().getResource(path).getFile();
 
-    return new File(path.substring(0, path.lastIndexOf('!'))).toString();
+      return new File(path.substring(0, path.lastIndexOf('!'))).toString();
+    } catch (Exception e) {
+      throw new Exception(e);
+    }
   }
 
   /**
