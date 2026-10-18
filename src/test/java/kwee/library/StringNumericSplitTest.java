@@ -1,27 +1,14 @@
 package kwee.library;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javafx.util.Pair;
-import junit.framework.TestCase;
 
-public class StringNumericSplitTest extends TestCase {
-
-  @Override
-  @Before
-  public void setUp() throws Exception {
-    super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception {
-    super.tearDown();
-  }
+public class StringNumericSplitTest {
 
   @Test
   public void testSpiltAlphanumeric() {

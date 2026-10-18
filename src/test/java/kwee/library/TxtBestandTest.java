@@ -1,17 +1,13 @@
 package kwee.library;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
-// import java.util.logging.Level;
-// import java.util.logging.Logger;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-// import kwee.logger.MyLogger;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TxtBestandTest extends TxtBestand {
 //  private static final Logger LOGGER = MyLogger.getLogger();
@@ -26,7 +22,7 @@ public class TxtBestandTest extends TxtBestand {
   private String m_ExpFile2 = "";
   private String m_DirExp = "TxtBestand_Exp";
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     File ll_file = FileUtils.GetResourceFile(c_InpFile);
     m_OutputDir = ll_file.getParent();
@@ -36,10 +32,6 @@ public class TxtBestandTest extends TxtBestand {
 
     File lfile3 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile2);
     m_ExpFile2 = lfile3.getAbsolutePath();
-  }
-
-  @After
-  public void tearDown() throws Exception {
   }
 
   @Test
