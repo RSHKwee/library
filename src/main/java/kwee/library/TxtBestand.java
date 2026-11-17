@@ -13,8 +13,8 @@ import kwee.logger.MyLogger;
 
 public class TxtBestand {
   private static final Logger LOGGER = MyLogger.getLogger();
-  private String m_charset = "ISO-8859-1";
-
+  // private String m_charset = "ISO-8859-1";
+  private String m_charset = "ISO-8859-15";
   private String m_Filenaam = "";
   private String m_Header = "";
   private ArrayList<String> m_Regels = new ArrayList<String>();
@@ -80,7 +80,8 @@ public class TxtBestand {
    * @param a_OutputFile Output file name
    * @param a_Regels     Lines to dump
    */
-  public static void DumpBestand(String a_OutputFile, ArrayList<String> a_Regels) {
+  public static void DumpBestand(String a_OutputFile,
+      ArrayList<String> a_Regels) {
     try {
       OutputTxt logbestand = new OutputTxt(a_OutputFile);
       logbestand.SetFooter("# " + a_OutputFile);
@@ -91,7 +92,8 @@ public class TxtBestand {
     }
   }
 
-  public static void DumpBestand(String a_OutputFile, String a_Header, ArrayList<String> a_Regels) {
+  public static void DumpBestand(String a_OutputFile, String a_Header,
+      ArrayList<String> a_Regels) {
     try {
       OutputTxt logbestand = new OutputTxt(a_OutputFile);
       logbestand.SetHeader(a_Header);
@@ -109,7 +111,8 @@ public class TxtBestand {
    * @param a_OutputFile Output file name
    * @param a_Regels     XML Lines to dump
    */
-  public static void DumpXmlBestand(String a_OutputFile, ArrayList<String> a_Regels) {
+  public static void DumpXmlBestand(String a_OutputFile,
+      ArrayList<String> a_Regels) {
     try {
       OutputTxt logbestand = new OutputTxt(a_OutputFile);
       logbestand.SetComment("<!-- ", " -->");
